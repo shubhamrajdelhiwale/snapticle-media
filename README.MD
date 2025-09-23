@@ -1,6 +1,6 @@
 ## Snaptic - AI-Powered Content Management Platform
 
-Snaptic is a comprehensive content management backend built with Go, Fiber framework, MongoDB, and OpenAI API integration. Features intelligent article categorization, automated image generation from text content, user authentication with JWT, and role-based access control. Includes automated category recommendations using AI analysis, secure user management system, and RESTful API design.
+Snaptic helps you create and manage articles with AI assistance, automatically generating images from text and suggesting relevant categories for your content.
 
 1. **Generate Image-Based Articles**: Dynamically create image-rich articles based on textual content stored in the database.
 2. **Recommend Article Categories**: Provide intelligent category recommendations based on existing article categories in the database.
