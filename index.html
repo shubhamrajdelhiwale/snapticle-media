@@ -116,9 +116,9 @@
 </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-[#fbf1e5]">
 <!-- TOP BAR -->
-<div class="bg-[#1e1b4b] text-white text-sm">
+<div class="bg-[#f7e8db] text-[#3d2e24] text-sm">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
 <!-- LEFT -->
     <div class="flex items-center gap-6 topbar-info">
@@ -152,7 +152,7 @@
   </div>
 </div>
 <!-- Top Scrollable Bar -->
-<div class="w-full h-[10vh] min-h-[40px] max-h-[60px] bg-black text-white overflow-hidden relative">
+<div class="w-full h-[10vh] min-h-[40px] max-h-[60px] bg-[#f7e8db] text-[#3d2e24] overflow-hidden relative">
     <div class="absolute inset-0 flex items-center">
         <div class="animate-marquee whitespace-nowrap text-sm md:text-base font-medium">
             <span class="mx-8">🚀 Powered by Efsolit Technology Private Limited</span>
@@ -166,7 +166,7 @@
 <style>
 @keyframes marquee {
     from {
-        transform: translateX(100%);
+        transform: translateX(0%);
     }
     to {
         transform: translateX(-100%);
@@ -176,6 +176,7 @@
 .animate-marquee {
     display: inline-block;
     animation: marquee 18s linear infinite;
+    animation-timing-function: linear;
 }
 </style>
 <!-- NAVBAR -->
@@ -587,13 +588,13 @@
 </header>
 
 <!-- HERO -->
-<section class="relative text-white overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center">
+<section class="reveal-on-scroll relative overflow-hidden bg-gradient-to-br from-[#fff8f0] via-[#f4e3d0] to-[#ebd6c2] flex items-center">
   <!-- SUBTLE GRADIENT OVERLAY -->
-  <div class="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-transparent to-purple-500/5"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-orange-200/10 via-transparent to-yellow-200/10"></div>
  <!-- MINIMAL ANIMATED ELEMENTS -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-32 left-16 w-24 h-24 bg-gradient-to-r from-orange-400/20 to-pink-500/20 rounded-full blur-xl animate-pulse"></div>
-    <div class="absolute bottom-32 right-24 w-32 h-32 bg-gradient-to-r from-blue-400/15 to-purple-500/15 rounded-full blur-xl animate-pulse"></div>
+    <div class="absolute top-32 left-16 w-24 h-24 bg-gradient-to-r from-orange-200/30 to-yellow-200/30 rounded-full blur-xl animate-pulse"></div>
+    <div class="absolute bottom-32 right-24 w-32 h-32 bg-gradient-to-r from-amber-200/25 to-rose-200/25 rounded-full blur-xl animate-pulse"></div>
   </div>
 
   <!-- CONTENT -->
@@ -605,24 +606,20 @@
       <div class="order-1 lg:order-1 text-center lg:text-left">
 
         <!-- ELEGANT BADGE -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium mb-6">
-          <i class="fa-solid fa-crown text-yellow-400"></i>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-[#e7d2c0] text-[#5b4637] text-sm font-medium mb-6">
+          <i class="fa-solid fa-crown text-[#b38b6b]"></i>
           Premium Digital Marketing Agency
         </div>
 
         <!-- CLEAN HEADING -->
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-          <span class="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-            Best Digital Marketing
-          </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-[#3d2e24]">
+          Digital Marketing
           <br>
-          <span class="bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
-            Solutions in Noida
-          </span>
+          Solutions in Noida
         </h1>
 
         <!-- CONCISE DESCRIPTION -->
-        <p class="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-lg">
+        <p class="text-lg md:text-xl text-[#5b4637] mb-8 leading-relaxed max-w-lg">
           Transform your business with our expert team. We deliver premium results through innovative strategies that guarantee growth.
         </p>
 
@@ -638,7 +635,7 @@
 
   <!-- Button 2 -->
   <a href="snapticle-media-portfolio.html" 
-     class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 inline-flex items-center justify-center">
+     class="bg-white/90 backdrop-blur-sm border border-[#e7d2c0] text-[#3d2e24] px-8 py-4 rounded-xl font-semibold hover:bg-white transition-all duration-300 inline-flex items-center justify-center">
     View Our Work
   </a>
 
@@ -653,7 +650,7 @@
           <div class="absolute -inset-4 bg-gradient-to-r from-orange-400/20 to-pink-500/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
 
           <!-- CLEAN IMAGE CONTAINER -->
-          <div class="relative bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 shadow-2xl">
+          <div class="relative bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#e7d2c0] shadow-2xl">
             <img
               src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
               alt="Digital Marketing Growth"
@@ -675,22 +672,22 @@
 </section>
 
 <!-- SERVICES -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-10">
-  <div class="pointer-events-none absolute -left-40 -top-20 w-96 h-96 rounded-full bg-gradient-to-r from-blue-200/30 to-purple-200/30 blur-3xl"></div>
-  <div class="pointer-events-none absolute right-0 bottom-0 w-80 h-80 rounded-full bg-gradient-to-r from-orange-200/20 to-pink-200/20 blur-3xl"></div>
+<section class="reveal-on-scroll relative overflow-hidden bg-gradient-to-br from-[#fbf2e5] via-[#f6e4d5] to-[#f0dbca] py-10">
+  <div class="pointer-events-none absolute -left-40 -top-20 w-96 h-96 rounded-full bg-[#f1d7b5] opacity-30 blur-3xl"></div>
+  <div class="pointer-events-none absolute right-0 bottom-0 w-80 h-80 rounded-full bg-[#ecd4bb] opacity-25 blur-3xl"></div>
 
   <div class="relative max-w-7xl mx-auto px-6">
 
     <!-- HEADING -->
     <div class="max-w-4xl mx-auto text-center mb-16">
-      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-semibold mb-6">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#d8b496] to-[#c9a17c] text-white text-sm font-semibold mb-6">
         <i class="fa-solid fa-cogs"></i>
         Our Premium Services
       </span>
-      <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-slate-800 via-blue-800 to-indigo-800 bg-clip-text text-transparent">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#3d2e24]">
         Comprehensive Digital Solutions
       </h2>
-      <p class="text-slate-600 text-lg md:text-xl leading-relaxed">
+      <p class="text-[#5b4637] text-lg md:text-xl leading-relaxed">
         From strategy to execution, we deliver end-to-end digital marketing services that drive measurable results and sustainable growth for your business.
       </p>
     </div>
@@ -699,7 +696,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
       <!-- 1 -->
-      <div onclick="window.location.href='snapticle-media-social-media-services.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-social-media-services.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -723,7 +720,7 @@
       </div>
 
       <!-- 2 -->
-      <div onclick="window.location.href='snapticle-media-content-shoot-services.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-content-shoot-services.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -744,7 +741,7 @@
       </div>
 
       <!-- 3 -->
-      <div onclick="window.location.href='snapticle-media-graphics-designing.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-graphics-designing.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -765,7 +762,7 @@
       </div>
 
       <!-- 4 -->
-      <div onclick="window.location.href='snapticle-media-website-development.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-website-development.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -789,7 +786,7 @@
       </div>
 
       <!-- 5 -->
-      <div onclick="window.location.href='snapticle-media-seo-automation.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-seo-automation.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -810,7 +807,7 @@
       </div>
 
       <!-- 6 -->
-      <div onclick="window.location.href='snapticle-media-tools-software-hub.html'" class="group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+      <div onclick="window.location.href='snapticle-media-tools-software-hub.html'" class="reveal-card reveal-on-scroll group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
         <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div class="relative">
           <div class="flex justify-between items-start mb-6">
@@ -839,7 +836,7 @@
 </section>
 
 <!-- TRUE FULL-WIDTH CTA SECTION -->
-<section class="w-full bg-sky-50 py-16 sm:py-24">
+<section class="reveal-on-scroll w-full bg-sky-50 py-16 sm:py-24">
   <div class="max-w-4xl mx-auto px-6">
     <div class="flex flex-col sm:flex-row items-center justify-between gap-6 bg-sky-50 sm:bg-white p-8 sm:p-12 sm:rounded-[2.5rem] sm:shadow-xl sm:border border-gray-100 text-center sm:text-left">
       <div class="w-full sm:w-auto">
@@ -861,7 +858,7 @@
 </section>
 
 <!-- ABOUT -->
-<section class="relative overflow-hidden bg-white py-12 md:py-22">
+<section class="reveal-on-scroll relative overflow-hidden bg-white py-12 md:py-22">
   <!-- ANIMATED BACKGROUND ELEMENTS -->
   <div class="absolute inset-0 pointer-events-none">
     <div class="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-orange-200 to-pink-300 rounded-full opacity-20 blur-3xl animate-pulse"></div>
@@ -959,26 +956,26 @@
 </section>
 
 <!-- FEATURES -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-16 md:py-18">
+<section class="reveal-on-scroll relative overflow-hidden bg-gradient-to-br from-[#fff9f0] via-[#f5e7d8] to-[#f0e1d2] py-16 md:py-18">
 
-  <!-- ANIMATED BACKGROUND ELEMENTS -->
+  <!-- SOFT BACKGROUND ELEMENTS -->
   <div class="absolute inset-0">
-    <div class="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-10 animate-pulse"></div>
-    <div class="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full opacity-15 animate-bounce"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full opacity-10 animate-pulse"></div>
+    <div class="absolute top-20 left-10 w-32 h-32 bg-[#f5dbbc] rounded-full opacity-20 blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-24 h-24 bg-[#ecd4bb] rounded-full opacity-25 blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#f3e0d2] rounded-full opacity-20 blur-3xl"></div>
   </div>
 
   <!-- CONTENT -->
   <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
     <!-- LEFT - REASONS -->
-    <div class="text-white">
+    <div class="text-[#3d2e24]">
 
       <div class="mb-8">
-        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-4 bg-gradient-to-r from-white via-yellow-200 to-orange-300 bg-clip-text text-transparent">
+        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-4 text-[#3d2e24]">
           Why Choose Our <br> Premium Services?
         </h2>
-        <p class="text-gray-300 text-lg">
+        <p class="text-[#5b4637] text-lg">
           Discover the advantages that make us the top choice for digital marketing excellence.
         </p>
       </div>
@@ -987,14 +984,14 @@
       <div class="space-y-6">
 
         <!-- ITEM 1 -->
-        <div class="group bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+        <div class="reveal-card reveal-on-scroll group bg-white/95 backdrop-blur-sm rounded-xl p-6 border border-[#e7d2c0] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
           <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-orange-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
+            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-[#d8b496] to-[#b38b6b] rounded-lg flex items-center justify-center shadow-lg">
               <i class="fa-solid fa-users text-white text-xl"></i>
             </div>
             <div>
-              <h4 class="font-bold text-xl text-white mb-2 group-hover:text-yellow-300 transition-colors">Expert Team</h4>
-              <p class="text-gray-200 leading-relaxed">
+              <h4 class="font-bold text-xl text-[#3d2e24] mb-2">Expert Team</h4>
+              <p class="text-[#5b4637] leading-relaxed">
                 Our skilled professionals bring deep expertise in creating high-impact marketing campaigns that drive real results.
               </p>
             </div>
@@ -1002,14 +999,14 @@
         </div>
 
         <!-- ITEM 2 -->
-        <div class="group bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+        <div class="reveal-card reveal-on-scroll group bg-white/95 backdrop-blur-sm rounded-xl p-6 border border-[#e7d2c0] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
           <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg flex items-center justify-center shadow-lg">
+            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-[#c9a17c] to-[#b28f69] rounded-lg flex items-center justify-center shadow-lg">
               <i class="fa-solid fa-bolt text-white text-xl"></i>
             </div>
             <div>
-              <h4 class="font-bold text-xl text-white mb-2 group-hover:text-pink-300 transition-colors">Enhanced Engagement</h4>
-              <p class="text-gray-200 leading-relaxed">
+              <h4 class="font-bold text-xl text-[#3d2e24] mb-2">Enhanced Engagement</h4>
+              <p class="text-[#5b4637] leading-relaxed">
                 We use cutting-edge techniques to boost brand awareness and create meaningful customer interactions.
               </p>
             </div>
@@ -1017,14 +1014,14 @@
         </div>
 
         <!-- ITEM 3 -->
-        <div class="group bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+        <div class="reveal-card reveal-on-scroll group bg-white/95 backdrop-blur-sm rounded-xl p-6 border border-[#e7d2c0] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
           <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-[#beb28f] to-[#d9c3a3] rounded-lg flex items-center justify-center shadow-lg">
               <i class="fa-solid fa-trophy text-white text-xl"></i>
             </div>
             <div>
-              <h4 class="font-bold text-xl text-white mb-2 group-hover:text-cyan-300 transition-colors">Results-Oriented</h4>
-              <p class="text-gray-200 leading-relaxed">
+              <h4 class="font-bold text-xl text-[#3d2e24] mb-2">Results-Oriented</h4>
+              <p class="text-[#5b4637] leading-relaxed">
                 We're committed to delivering measurable outcomes and achieving your most ambitious marketing goals.
               </p>
             </div>
@@ -1033,21 +1030,19 @@
 
       </div>
 
-      
-
     </div>
 
     <!-- RIGHT - PREMIUM FORM -->
-    <div class="bg-white/95 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-2xl border border-white/20 w-full max-w-lg mx-auto">
+    <div class="bg-white/95 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-2xl border border-[#e7d2c0] w-full max-w-lg mx-auto">
 
   <div class="text-center mb-6">
-    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full mb-4 shadow-lg">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#d8b496] to-[#b38b6b] rounded-full mb-4 shadow-lg">
       <i class="fa-solid fa-search text-white text-2xl"></i>
     </div>
-    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-[#3d2e24] mb-2">
       Free SEO Analysis
     </h3>
-    <p class="text-gray-600">
+    <p class="text-[#5b4637]">
       Get your website analyzed by experts - completely free!
     </p>
   </div>
@@ -1056,17 +1051,17 @@
 
     <div class="relative">
       <input name="email" type="email" required placeholder="Your Email Address"
-        class="w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl outline-none focus:border-orange-500">
+        class="w-full pl-4 pr-4 py-3 border-2 border-[#e7d2c0] rounded-xl outline-none focus:border-[#b38b6b] bg-[#fff7f0] text-[#3d2e24]">
     </div>
 
     <div class="relative">
       <input name="website" type="url" required placeholder="Your Website URL"
-        class="w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl outline-none focus:border-orange-500">
+        class="w-full pl-4 pr-4 py-3 border-2 border-[#e7d2c0] rounded-xl outline-none focus:border-[#b38b6b] bg-[#fff7f0] text-[#3d2e24]">
     </div>
 
     <div class="relative">
       <textarea name="message" rows="3" placeholder="Tell us about your goals"
-        class="w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl outline-none focus:border-orange-500"></textarea>
+        class="w-full pl-4 pr-4 py-3 border-2 border-[#e7d2c0] rounded-xl outline-none focus:border-[#b38b6b] bg-[#fff7f0] text-[#3d2e24]"></textarea>
     </div>
 
     <button
@@ -1086,7 +1081,7 @@
   </div>
 
 </section>
-<section class="bg-gradient-to-br from-slate-50 to-blue-50 py-16 md:py-16 overflow-hidden">
+<section class="reveal-on-scroll bg-gradient-to-br from-[#f7f1e7] via-[#f4e3d0] to-[#ede0d4] py-16 md:py-16 overflow-hidden">
 
   <div class="max-w-7xl mx-auto px-6">
 
@@ -1109,7 +1104,7 @@
       <div id="track" class="flex gap-6 w-max">
 
         <!-- CARD 1 -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  alt="Healthcare Digital Marketing"
@@ -1157,7 +1152,7 @@
         </div>
 
         <!-- CARD 2 -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  alt="SEO Best Practices"
@@ -1205,7 +1200,7 @@
         </div>
 
         <!-- CARD 3 -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  alt="Local SEO Mastery"
@@ -1253,7 +1248,7 @@
         </div>
 
         <!-- CARD 4 -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  class="w-full h-[200px] object-cover group-hover:scale-110 transition-transform duration-500">
@@ -1299,7 +1294,7 @@
         </div>
 
         <!-- CARD 5 -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  class="w-full h-[200px] object-cover group-hover:scale-110 transition-transform duration-500">
@@ -1345,7 +1340,7 @@
         </div>
 
         <!-- DUPLICATE CARD 1 (for infinite scroll) -->
-        <div class="min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
+        <div class="reveal-card reveal-on-scroll min-w-[280px] max-w-[320px] flex-1 bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
           <div class="relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                  class="w-full h-[240px] object-cover group-hover:scale-110 transition-transform duration-500">
@@ -1456,7 +1451,7 @@
 </section>
 
 <!-- business we grow -->
-<section class="py-12 bg-white overflow-hidden border-y border-slate-100">
+<section class="reveal-on-scroll py-12 bg-white overflow-hidden border-y border-slate-100">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-10">
       <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-wider mb-4">
@@ -1604,7 +1599,7 @@
   </div>
 </section>
 
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-20">
+<section class="reveal-on-scroll relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-20">
   <div class="pointer-events-none absolute -left-32 -top-20 w-80 h-80 rounded-full bg-orange-200/20 blur-3xl"></div>
   <div class="pointer-events-none absolute right-0 bottom-0 w-72 h-72 rounded-full bg-indigo-300/15 blur-3xl"></div>
 
@@ -1616,7 +1611,7 @@
         <i class="fa-solid fa-question-circle"></i>
         Frequently Asked Questions
       </span>
-      <h2 class="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+      <h2 class="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent reveal-on-scroll">
         Got Questions? We've Got Answers
       </h2>
       <p class="text-slate-600 text-lg md:text-xl leading-relaxed">
@@ -1830,7 +1825,7 @@
 </style>
 
 <!-- WHY YOU NEED US -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-20">
+<section class="reveal-on-scroll relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-20">
   <div class="pointer-events-none absolute -left-24 -top-10 w-72 h-72 rounded-full bg-orange-200/30 blur-3xl"></div>
   <div class="pointer-events-none absolute right-0 top-20 w-56 h-56 rounded-full bg-indigo-300/20 blur-3xl"></div>
 
@@ -2000,7 +1995,7 @@
   </div>
 </section>
 
-<footer class="bg-indigo-950 text-gray-300 pt-16 relative overflow-hidden">
+<footer class="bg-[#f7e8db] text-[#3d2e24] pt-16 relative overflow-hidden">
 
   <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
 
@@ -2018,7 +2013,7 @@
 
     <!-- COMPANY -->
      <div>
-      <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+      <h3 class="text-[#3d2e24] font-semibold text-lg mb-4">Company</h3>
       <ul class="space-y-2 text-sm">
         <li class="hover:text-orange-400 cursor-pointer"><a href="snapticle-media-blog.html">Blog</a></li>
         <li class="hover:text-orange-400 cursor-pointer"><a href="snapticle-media-portfolio.html">Portfolio</a></li>
@@ -2032,7 +2027,7 @@
 
     <!-- SERVICES -->
     <div>
-      <h3 class="text-white font-semibold text-lg mb-4">Our Services</h3>
+      <h3 class="text-[#3d2e24] font-semibold text-lg mb-4">Our Services</h3>
       <ul class="space-y-2 text-sm">
         <li class="hover:text-orange-400"><a href="snapticle-media-social-media-services.html">Social Media Services</a></li>
         <li class="hover:text-orange-400"><a href="snapticle-media-content-shoot-services.html">Content & Shoot Services</a></li>
@@ -2045,9 +2040,9 @@
 
     <!-- OFFICE -->
     <div>
-      <h3 class="text-white font-semibold text-lg mb-4">Our Office</h3>
+      <h3 class="text-[#3d2e24] font-semibold text-lg mb-4">Our Office</h3>
 
-      <p class="text-sm mb-2 font-medium text-white">
+      <p class="text-sm mb-2 font-medium text-[#3d2e24]">
         SnapTicle Media – Best Digital Marketing Agency in Noida
       </p>
 
@@ -2055,7 +2050,7 @@
         Sector 62, Noida, Uttar Pradesh 201309
       </p>
 
-      <p class="text-lg font-semibold text-white mb-2">
+      <p class="text-lg font-semibold text-[#3d2e24] mb-2">
         📞 +91-9863113682
       </p>
 
@@ -2086,7 +2081,7 @@
 
   <!-- COPYRIGHT -->
   <div class="text-center text-sm text-gray-400 py-6 border-t border-gray-700 mt-10">
-    © 2026 <span class="text-orange-400 font-semibold">SNAPTICLE MEDIA</span> | All Rights Reserved
+    © 2026 SNAPTICLE MEDIA | by Efsolit Technology Private Limited
   </div>
 
   <!-- BG SHAPE -->
@@ -2231,6 +2226,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const statsSection = document.getElementById("stats");
   if (statsSection) observer.observe(statsSection);
 
+  const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-card');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealElements.forEach(el => revealObserver.observe(el));
 
   // FAQ functionality
   const faqs = document.querySelectorAll(".faq-item");
