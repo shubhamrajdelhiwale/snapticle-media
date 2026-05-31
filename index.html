@@ -151,7 +151,33 @@
     </div>
   </div>
 </div>
+<!-- Top Scrollable Bar -->
+<div class="w-full h-[10vh] min-h-[40px] max-h-[60px] bg-black text-white overflow-hidden relative">
+    <div class="absolute inset-0 flex items-center">
+        <div class="animate-marquee whitespace-nowrap text-sm md:text-base font-medium">
+            <span class="mx-8">🚀 Powered by Efsolit Technology Private Limited</span>
+            <span class="mx-8">🚀 Powered by Efsolit Technology Private Limited</span>
+            <span class="mx-8">🚀 Powered by Efsolit Technology Private Limited</span>
+            <span class="mx-8">🚀 Powered by Efsolit Technology Private Limited</span>
+        </div>
+    </div>
+</div>
 
+<style>
+@keyframes marquee {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-marquee {
+    display: inline-block;
+    animation: marquee 18s linear infinite;
+}
+</style>
 <!-- NAVBAR -->
 <header class="bg-white shadow relative  z-50">
   <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
