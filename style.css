@@ -331,3 +331,239 @@ header img {
   color: #f97316;
 }
 
+/* White + Beige Theme Overrides */
+:root {
+  --beige-bg: #fbf1e5;
+  --beige-surface: #fff8f0;
+  --beige-soft: #f4e3d0;
+  --beige-border: #e7d2c0;
+  --beige-text: #3d2e24;
+  --beige-muted: #7c6551;
+  --beige-accent: #b38b6b;
+}
+
+body {
+  background: var(--beige-bg) !important;
+  color: var(--beige-text) !important;
+}
+
+body, body * {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+header,
+.topbar-info,
+.topbar-social-icons,
+.mobile-nav,
+.desktop-nav .group > div,
+.desktop-nav .group .absolute,
+.desktop-nav .group .absolute a,
+.bg-white,
+.bg-white\/80,
+.bg-white\/95,
+.bg-slate-50,
+.bg-sky-50,
+.bg-gradient-to-br.from-slate-50,
+.bg-gradient-to-br.from-slate-900,
+.bg-gradient-to-br.from-slate-50,
+.bg-black,
+.bg-\#1e1b4b {
+  background: var(--beige-surface) !important;
+  color: var(--beige-text) !important;
+  border-color: var(--beige-border) !important;
+}
+
+.topbar-info span,
+.topbar-social-icons a,
+.desktop-nav a,
+.desktop-nav button,
+.mobile-nav a,
+.mobile-nav button,
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-slate-600,
+  .text-slate-500,
+  .text-slate-400,
+  .text-slate-300,
+  .text-gray-900,
+  .text-gray-800,
+  .text-gray-700,
+  .text-gray-600,
+  .text-gray-500,
+  .text-gray-400,
+  .text-gray-300 {
+    color: var(--beige-text) !important;
+  }
+
+.topbar-info,
+.topbar-social-icons,
+.topbar-social-icons a,
+.topbar-info > div {
+  background: transparent !important;
+  color: #3d2e24 !important;
+}
+
+.topbar-social-icons a {
+  padding: 0 !important;
+}
+
+footer,
+footer a,
+footer li,
+footer p,
+footer span,
+footer h3,
+footer h4,
+footer h2 {
+  color: var(--beige-text) !important;
+}
+.bg-\#1e1b4b {
+  background: #ddc6b3 !important;
+}
+
+.bg-white\/10 {
+  background: rgba(255, 248, 240, 0.88) !important;
+}
+
+.bg-white\/5 {
+  background: rgba(255, 248, 240, 0.65) !important;
+}
+
+.bg-white\/90,
+.bg-white\/95 {
+  background: rgba(255, 248, 240, 0.95) !important;
+}
+
+.shadow-xl,
+.shadow-2xl,
+.shadow-lg {
+  box-shadow: 0 18px 45px -25px rgba(96, 63, 38, 0.16) !important;
+}
+
+a:hover,
+button:hover,
+.hover\:text-orange-400:hover,
+.hover\:text-orange-500:hover {
+  color: #8d6d52 !important;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.65;
+}
+
+/* Scroll reveal animation utilities */
+.reveal-on-scroll,
+.reveal-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out, box-shadow 0.35s ease;
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.visible,
+.reveal-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-card:hover {
+  box-shadow: 0 28px 70px rgba(61, 46, 36, 0.14) !important;
+}
+
+/* Preserve intentional white text on buttons and icons while keeping page text dark where possible */
+.bg-gradient-to-r .text-white,
+button.text-white,
+a.text-white,
+button .text-white,
+a .text-white {
+  color: #ffffff !important;
+}
+
+.bg-gradient-to-r.from-orange-500.to-pink-500,
+.bg-gradient-to-r.from-blue-600.to-purple-600,
+.bg-gradient-to-r.from-orange-500.via-pink-500.to-purple-600,
+.bg-gradient-to-r.from-green-500.to-emerald-500,
+.bg-gradient-to-r.from-indigo-500.to-blue-500 {
+  background-image: linear-gradient(135deg, #d8b496, #c9a17c) !important;
+}
+
+.bg-gradient-to-r.from-orange-500.to-pink-500 .text-white,
+.bg-gradient-to-r.from-blue-600.to-purple-600 .text-white,
+.bg-gradient-to-r.from-orange-500.via-pink-500.to-purple-600 .text-white {
+  color: #ffffff !important;
+}
+
+.section-heading,
+.section-text,
+.hero-heading,
+.hero-subtitle {
+  color: var(--beige-text) !important;
+}
+
+/* Force remaining Tailwind text color utilities into beige theme */
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-slate-600,
+.text-slate-500,
+.text-slate-400,
+.text-slate-300,
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-gray-600,
+.text-gray-500,
+.text-gray-400,
+.text-gray-300,
+.text-blue-500,
+.text-blue-600,
+.text-indigo-900,
+.text-indigo-600,
+.text-indigo-500,
+.text-purple-600,
+.text-purple-500,
+.text-pink-600,
+.text-orange-600,
+.text-orange-500,
+.text-green-600,
+.text-green-500,
+.text-emerald-600,
+.text-emerald-500,
+.text-teal-500,
+.text-cyan-600,
+.text-red-500,
+.text-red-600,
+.text-yellow-600,
+.text-amber-600,
+.text-gray-50,
+.text-slate-50 {
+  color: var(--beige-text) !important;
+}
+
+/* So accent labels remain visible, preserve background-specific text on white buttons */
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Make softer info badges and panels beige instead of blue or gray */
+.bg-sky-50,
+.bg-blue-100,
+.bg-indigo-100,
+.bg-pink-100,
+.bg-emerald-100,
+.bg-cyan-100,
+.bg-yellow-100,
+.bg-green-100,
+.bg-red-100,
+.bg-purple-100,
+.bg-orange-100,
+.bg-gradient-to-r.from-blue-200\/30.to-purple-200\/30,
+.bg-gradient-to-r.from-orange-200\/20.to-pink-200\/20,
+.bg-gradient-to-br.from-slate-50.via-blue-50.to-indigo-100 {
+  background-color: var(--beige-surface) !important;
+  background-image: none !important;
+  border-color: var(--beige-border) !important;
+}
+
