@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Snapticle Media | Ultimate Spin & Win</title>
+    <meta name="title" content="Snapticle Media | Ultimate Spin & Win">
+    <meta name="description" content="Engage your customers with the ultimate Spin & Win tool. Premium rewards, seamless animations, and instant joy.">
+    <meta name="author" content="Snapticle Media">
+    <link rel="canonical" href="https://snapticlemedia.in/spinner.html">
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { light: '#F5E6C4', DEFAULT: '#D4AF37', dark: '#996515' },
+                        dark: { DEFAULT: '#0A0A0A', soft: '#1A1A1A', accent: '#2A2A2A' },
+                        spinGreen: '#4CAF50'
+                    },
+                    fontFamily: { 
+                        serif: ['Playfair Display', 'serif'], 
+                        sans: ['Montserrat', 'sans-serif'],
+                        script: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { 
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F5E6C4 50%, #996515 100%); 
+            --spin-green: #4CAF50;
+            --spin-green-dark: #2E7D32;
+        }
+        body { 
+            background-color: #1a1a1a; 
+            background-image: radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 100%);
+            color: #FFFFFF; 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .back-btn i { color: #fff; font-size: 1.2rem; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+        /* Notification Styling */
+        #notification-host {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .spin-toast {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            border-left: 4px solid var(--spin-green);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: toastSlideIn 0.3s ease-out forwards;
+            pointer-events: auto;
+            font-size: 0.875rem;
+        }
+
+        /* Header Style */
+        .title-container { text-align: center; margin-bottom: 2rem; z-index: 10; }
+        .title-spin { 
+            font-family: 'Caveat', cursive; 
+            color: var(--spin-green); 
+            font-size: clamp(2.5rem, 8vw, 3.5rem); 
+            line-height: 1; 
+            margin-bottom: -0.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .title-wheel { 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 900; 
+            font-size: clamp(3rem, 12vw, 4.5rem); 
+            color: #FFFFFF; 
+            text-transform: uppercase; 
+            line-height: 0.9;
+            letter-spacing: -2px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 1rem;
+        }
+
+        /* Wheel Container */
+        .wheel-outer-wrap {
+            position: relative;
+            padding: 15px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 10px rgba(255,255,255,0.1), 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            max-width: 85vw;
+            max-height: 85vw;
+            border-radius: 50%;
+            overflow: visible;
+        }
+
+        .wheel-svg {
+            width: 100%;
+            height: 100%;
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        /* Pointer */
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            z-index: 50;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+        .pointer-svg { width: 100%; height: 100%; fill: #000; }
+
+        /* Center Spin Button */
+        .spin-btn-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, var(--spin-green) 0%, var(--spin-green-dark) 100%);
+            border: 5px solid white;
+            border-radius: 50%;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.3);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .spin-btn-center:hover { transform: translate(-50%, -50%) scale(1.05); }
+        .spin-btn-center:active { transform: translate(-50%, -50%) scale(0.95); }
+        .spin-text {
+            color: #FFFFFF;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Modal Styles */
+        .premium-modal {
+            background: #fff;
+            color: #000;
+            border-radius: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .reward-display {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--spin-green-dark);
+            margin: 1.5rem 0;
+            text-transform: uppercase;
+        }
+        .gold-btn-premium {
+            background: var(--spin-green);
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+        .gold-btn-premium:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(76, 175, 80, 0.4); }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(120%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Notification Host -->
+    <div id="notification-host"></div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-chevron-left"></i>
+    </a>
+
+    <!-- Header -->
+    <div class="title-container">
+        <div class="title-spin">Spin</div>
+        <div class="title-wheel">THE WHEEL</div>
+        <div class="subtitle">Win a surprise gift</div>
+    </div>
+
+    <!-- Wheel Section -->
+    <div class="wheel-outer-wrap">
+        <div class="wheel-container">
+            <!-- Pointer -->
+            <div class="wheel-pointer">
+                <svg class="pointer-svg" viewBox="0 0 40 40">
+                    <path d="M20 40L40 0H0L20 40Z"/>
+                </svg>
+            </div>
+
+            <!-- Spin Button -->
+            <div class="spin-btn-center" onclick="spinWheel()" id="spin-btn">
+                <span class="spin-text">Spin</span>
+            </div>
+
+            <!-- Wheel SVG -->
+            <svg class="wheel-svg" id="wheel-svg" viewBox="0 0 400 400">
+                <!-- Segments injected by JS -->
+            </svg>
+        </div>
+    </div>
+
+    <!-- Footer Attribution -->
+    <div class="mt-12 text-center opacity-40">
+        <p class="text-[10px] uppercase tracking-[0.4em] font-black">Powered by Snapticle Media</p>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden p-4 bg-black/70 backdrop-blur-sm">
+        <div class="premium-modal shadow-2xl">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-gift text-3xl text-green-600"></i>
+                </div>
+                <h3 class="text-gray-500 text-xs font-black uppercase tracking-widest">Congratulations!</h3>
+            </div>
+            
+            <div class="reward-display" id="win-reward-text">
+                REWARD NAME
+            </div>
+
+            <p class="text-gray-500 text-sm mb-8">
+                You've won an exclusive reward! Show this to the staff at the payment counter to redeem.
+            </p>
+
+            <button onclick="claimReward()" class="gold-btn-premium">Claim Now</button>
+        </div>
+    </div>
+
+    <script>
+        const bc = new BroadcastChannel('snapticle_v9_ultimate');
+        let currentReward = null;
+
+        function showNotification(message, icon = 'fa-check-circle') {
+            const host = document.getElementById('notification-host');
+            const toast = document.createElement('div');
+            toast.className = 'spin-toast';
+            toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+            host.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        const REWARDS = [
+            { text: "Buy 2 Get 2 Free", color: "#6366f1", textColor: "#ffffff", icon: "🍕" },
+            { text: "Get Free AI Workshop", color: "#312e81", textColor: "#ffffff", icon: "🤖" },
+            { text: "Flat 18k off & Free Gift", color: "#ffffff", textColor: "#1f2937", icon: "🦷" },
+            { text: "Get 5% Cashback", color: "#fce7f3", textColor: "#9d174d", icon: "💳" },
+            { text: "Lifetime Free Card", color: "#ccfbf1", textColor: "#134e4a", icon: "💎" },
+            { text: "Buy 6 Products at 999", color: "#a5f3fc", textColor: "#164e63", icon: "📦" }
+        ];
+
+        const svg = document.getElementById('wheel-svg');
+        const numSegments = REWARDS.length;
+        const anglePerSegment = 360 / numSegments;
+        let isSpinning = false;
+        let currentRotation = 0;
+        let lastSegment = -1;
+
+        // --- AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTick() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            // Sharper, more mechanical "tick"
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.04);
+            
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.04);
+            
+            // Faster pointer nudge for "snap" feel
+            gsap.fromTo(".wheel-pointer", { rotate: -18 }, { rotate: 0, duration: 0.08, ease: "back.out(3)" });
+        }
+
+        function playWinSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const now = audioCtx.currentTime;
+            
+            // Arpeggio for a more "magical" win feel
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + i * 0.1);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.05, now + i * 0.1 + 0.5);
+                
+                gain.gain.setValueAtTime(0, now + i * 0.1);
+                gain.gain.linearRampToValueAtTime(0.1, now + i * 0.1 + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start(now + i * 0.1);
+                osc.stop(now + i * 0.1 + 0.5);
+            });
+        }
+
+        function drawWheel() {
+            svg.innerHTML = ''; 
+            
+            REWARDS.forEach((reward, i) => {
+                const startAngle = i * anglePerSegment;
+                const endAngle = (i + 1) * anglePerSegment;
+                
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const x1 = 200 + 190 * Math.cos((startAngle - 90) * Math.PI / 180);
+                const y1 = 200 + 190 * Math.sin((startAngle - 90) * Math.PI / 180);
+                const x2 = 200 + 190 * Math.cos((endAngle - 90) * Math.PI / 180);
+                const y2 = 200 + 190 * Math.sin((endAngle - 90) * Math.PI / 180);
+                
+                const d = `M 200 200 L ${x1} ${y1} A 190 190 0 0 1 ${x2} ${y2} Z`;
+                path.setAttribute("d", d);
+                path.setAttribute("fill", reward.color);
+                path.setAttribute("stroke", "#ffffff");
+                path.setAttribute("stroke-width", "1");
+                svg.appendChild(path);
+
+                // Icon
+                const icon = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                const iconAngle = startAngle + anglePerSegment / 2;
+                const ix = 200 + 130 * Math.cos((iconAngle - 90) * Math.PI / 180);
+                const iy = 200 + 130 * Math.sin((iconAngle - 90) * Math.PI / 180);
+                icon.setAttribute("x", ix);
+                icon.setAttribute("y", iy);
+                icon.setAttribute("font-size", "28");
+                icon.setAttribute("text-anchor", "middle");
+                icon.setAttribute("dominant-baseline", "middle");
+                icon.setAttribute("transform", `rotate(${iconAngle}, ${ix}, ${iy})`);
+                icon.textContent = reward.icon;
+                svg.appendChild(icon);
+
+                // Text
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                const textAngle = startAngle + anglePerSegment / 2;
+                const tx = 200 + 85 * Math.cos((textAngle - 90) * Math.PI / 180);
+                const ty = 200 + 85 * Math.sin((textAngle - 90) * Math.PI / 180);
+                
+                text.setAttribute("x", tx);
+                text.setAttribute("y", ty);
+                text.setAttribute("fill", reward.textColor);
+                text.setAttribute("font-size", "9");
+                text.setAttribute("font-weight", "800");
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("dominant-baseline", "middle");
+                text.setAttribute("transform", `rotate(${textAngle}, ${tx}, ${ty})`);
+                
+                const words = reward.text.split(' ');
+                if (words.length > 2) {
+                    const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                    tspan1.setAttribute("x", tx);
+                    tspan1.setAttribute("dy", "-0.6em");
+                    tspan1.textContent = words.slice(0, 2).join(' ');
+                    const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                    tspan2.setAttribute("x", tx);
+                    tspan2.setAttribute("dy", "1.2em");
+                    tspan2.textContent = words.slice(2).join(' ');
+                    text.appendChild(tspan1);
+                    text.appendChild(tspan2);
+                } else if (words.length === 2) {
+                    const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                    tspan1.setAttribute("x", tx);
+                    tspan1.setAttribute("dy", "-0.3em");
+                    tspan1.textContent = words[0];
+                    const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                    tspan2.setAttribute("x", tx);
+                    tspan2.setAttribute("dy", "1em");
+                    tspan2.textContent = words[1];
+                    text.appendChild(tspan1);
+                    text.appendChild(tspan2);
+                } else {
+                    text.textContent = reward.text;
+                }
+                svg.appendChild(text);
+            });
+
+            // Outer Border Dots
+            for (let i = 0; i < 24; i++) {
+                const dotAngle = i * (360 / 24);
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                const dx = 200 + 195 * Math.cos((dotAngle - 90) * Math.PI / 180);
+                const dy = 200 + 195 * Math.sin((dotAngle - 90) * Math.PI / 180);
+                dot.setAttribute("cx", dx);
+                dot.setAttribute("cy", dy);
+                dot.setAttribute("r", "3");
+                dot.setAttribute("fill", "#ddd");
+                svg.appendChild(dot);
+            }
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const extraSpins = 10 + Math.random() * 5;
+            const randomAngle = Math.random() * 360;
+            const totalRotation = currentRotation + (extraSpins * 360) + randomAngle;
+
+            gsap.to("#wheel-svg", {
+                duration: 8,
+                rotation: totalRotation,
+                ease: "cubic-bezier(0.15, 0, 0.15, 1)",
+                onUpdate: function() {
+                    const rot = gsap.getProperty("#wheel-svg", "rotation");
+                    const currentSeg = Math.floor((rot % 360) / anglePerSegment);
+                    if (currentSeg !== lastSegment) {
+                        playTick();
+                        lastSegment = currentSeg;
+                    }
+                },
+                onComplete: () => {
+                    isSpinning = false;
+                    currentRotation = totalRotation % 360;
+                    const winningIndex = Math.floor((360 - (currentRotation % 360)) % 360 / anglePerSegment);
+                    showWin(REWARDS[winningIndex].text);
+                }
+            });
+        }
+
+        function showWin(reward) {
+            currentReward = reward;
+            document.getElementById('win-reward-text').textContent = reward;
+            document.getElementById('success-modal').classList.remove('hidden');
+            
+            // Play victory sound
+            playWinSound();
+            
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#4CAF50', '#FFFFFF', '#3F51B5']
+            });
+        }
+
+        function claimReward() {
+            if (!currentReward) return;
+
+            const couponCode = 'WIN-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            const rewardData = {
+                id: 'RW-' + Date.now(),
+                reward: currentReward,
+                coupon: couponCode,
+                timestamp: new Date().toISOString(),
+                status: 'Active'
+            };
+
+            // 1. Save to LocalStorage
+            const rewards = JSON.parse(localStorage.getItem('restaurant_claimed_rewards') || '[]');
+            rewards.push(rewardData);
+            localStorage.setItem('restaurant_claimed_rewards', JSON.stringify(rewards));
+
+            // 2. Notify via UI
+            showNotification('Reward Secured!', 'fa-lock');
+
+            // 3. Update Modal UI
+            document.getElementById('win-reward-text').innerHTML = `
+                <div class="text-[10px] opacity-40 uppercase tracking-[0.4em] mb-4">Coupon Code</div>
+                <div class="bg-gold/10 border border-gold/20 py-4 px-8 rounded-2xl">
+                    <span class="text-3xl font-mono text-gold tracking-[0.2em]">${couponCode}</span>
+                </div>
+            `;
+            
+            const p = document.querySelector('.premium-modal p');
+            p.innerHTML = "Screenshot this code or show it to our staff<br>during your next visit to redeem your gift.";
+            
+            const btn = document.querySelector('.gold-btn-premium');
+            btn.textContent = "Done";
+            btn.onclick = closeModal;
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            
+            // Reset modal UI for next time
+            setTimeout(() => {
+                document.getElementById('win-reward-text').className = 'reward-display';
+                document.getElementById('win-reward-text').innerHTML = 'REWARD';
+                
+                const p = document.querySelector('.premium-modal p');
+                p.innerHTML = 'An exclusive gift has been unlocked for you.<br>Claim it now to secure your reward.';
+                
+                const btn = document.querySelector('.gold-btn-premium');
+                btn.textContent = "Claim Reward";
+                btn.onclick = claimReward;
+                
+                currentReward = null;
+            }, 300);
+        }
+
+        window.onload = drawWheel;
+    </script>
+</body>
+</html>
