@@ -327,13 +327,16 @@
             }, 3000);
         }
 
+        // --- CONFIGURATION: CHANGE REWARDS HERE ---
+        // You can add more segments or change the text, colors, and icons below.
+        // Each object {} represents one slice of the wheel.
         const REWARDS = [
-            { text: "Buy 2 Get 2 Free", color: "#6366f1", textColor: "#ffffff", icon: "🍕" },
-            { text: "Get Free AI Workshop", color: "#312e81", textColor: "#ffffff", icon: "🤖" },
-            { text: "Flat 18k off & Free Gift", color: "#ffffff", textColor: "#1f2937", icon: "🦷" },
-            { text: "Get 5% Cashback", color: "#fce7f3", textColor: "#9d174d", icon: "💳" },
-            { text: "Lifetime Free Card", color: "#ccfbf1", textColor: "#134e4a", icon: "💎" },
-            { text: "Buy 6 Products at 999", color: "#a5f3fc", textColor: "#164e63", icon: "📦" }
+            { text: "Free Main Course", color: "#6366f1", textColor: "#ffffff", icon: "🍱" },
+            { text: "5% Instant Discount", color: "#312e81", textColor: "#ffffff", icon: "📉" },
+            { text: "10% Flat Discount", color: "#ffffff", textColor: "#1f2937", icon: "💰" },
+            { text: "15% Special Offer", color: "#fce7f3", textColor: "#9d174d", icon: "✨" },
+            { text: "20% On Next Order", color: "#ccfbf1", textColor: "#134e4a", icon: "🎁" },
+            { text: "Free Dessert Platter", color: "#a5f3fc", textColor: "#164e63", icon: "🍰" }
         ];
 
         const svg = document.getElementById('wheel-svg');
@@ -351,8 +354,9 @@
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             
-            // Sharper, more mechanical "tick"
-            osc.type = 'sine';
+            // --- CHANGE TICK SOUND HERE ---
+            // frequency.setValueAtTime(1200...) -> Higher number means higher pitch.
+            osc.type = 'sine'; 
             osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.04);
             
@@ -365,7 +369,7 @@
             osc.start();
             osc.stop(audioCtx.currentTime + 0.04);
             
-            // Faster pointer nudge for "snap" feel
+            // Pointer nudge animation
             gsap.fromTo(".wheel-pointer", { rotate: -18 }, { rotate: 0, duration: 0.08, ease: "back.out(3)" });
         }
 
@@ -415,31 +419,31 @@
                 path.setAttribute("stroke-width", "1");
                 svg.appendChild(path);
 
-                // Icon
+                // Icon (Inner side)
                 const icon = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 const iconAngle = startAngle + anglePerSegment / 2;
-                const ix = 200 + 130 * Math.cos((iconAngle - 90) * Math.PI / 180);
-                const iy = 200 + 130 * Math.sin((iconAngle - 90) * Math.PI / 180);
+                const ix = 200 + 75 * Math.cos((iconAngle - 90) * Math.PI / 180);
+                const iy = 200 + 75 * Math.sin((iconAngle - 90) * Math.PI / 180);
                 icon.setAttribute("x", ix);
                 icon.setAttribute("y", iy);
-                icon.setAttribute("font-size", "28");
+                icon.setAttribute("font-size", "22");
                 icon.setAttribute("text-anchor", "middle");
                 icon.setAttribute("dominant-baseline", "middle");
                 icon.setAttribute("transform", `rotate(${iconAngle}, ${ix}, ${iy})`);
                 icon.textContent = reward.icon;
                 svg.appendChild(icon);
 
-                // Text
+                // Text (Outer side)
                 const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 const textAngle = startAngle + anglePerSegment / 2;
-                const tx = 200 + 85 * Math.cos((textAngle - 90) * Math.PI / 180);
-                const ty = 200 + 85 * Math.sin((textAngle - 90) * Math.PI / 180);
+                const tx = 200 + 138 * Math.cos((textAngle - 90) * Math.PI / 180);
+                const ty = 200 + 138 * Math.sin((textAngle - 90) * Math.PI / 180);
                 
                 text.setAttribute("x", tx);
                 text.setAttribute("y", ty);
                 text.setAttribute("fill", reward.textColor);
-                text.setAttribute("font-size", "9");
-                text.setAttribute("font-weight", "800");
+                text.setAttribute("font-size", "14");
+                text.setAttribute("font-weight", "900");
                 text.setAttribute("text-anchor", "middle");
                 text.setAttribute("dominant-baseline", "middle");
                 text.setAttribute("transform", `rotate(${textAngle}, ${tx}, ${ty})`);
@@ -448,22 +452,22 @@
                 if (words.length > 2) {
                     const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
                     tspan1.setAttribute("x", tx);
-                    tspan1.setAttribute("dy", "-0.6em");
+                    tspan1.setAttribute("dy", "-0.7em");
                     tspan1.textContent = words.slice(0, 2).join(' ');
                     const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
                     tspan2.setAttribute("x", tx);
-                    tspan2.setAttribute("dy", "1.2em");
+                    tspan2.setAttribute("dy", "1.4em");
                     tspan2.textContent = words.slice(2).join(' ');
                     text.appendChild(tspan1);
                     text.appendChild(tspan2);
                 } else if (words.length === 2) {
                     const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
                     tspan1.setAttribute("x", tx);
-                    tspan1.setAttribute("dy", "-0.3em");
+                    tspan1.setAttribute("dy", "-0.4em");
                     tspan1.textContent = words[0];
                     const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
                     tspan2.setAttribute("x", tx);
-                    tspan2.setAttribute("dy", "1em");
+                    tspan2.setAttribute("dy", "1.1em");
                     tspan2.textContent = words[1];
                     text.appendChild(tspan1);
                     text.appendChild(tspan2);
@@ -492,6 +496,9 @@
             isSpinning = true;
             if (audioCtx.state === 'suspended') audioCtx.resume();
 
+            // --- CHANGE SPIN SPEED & DURATION HERE ---
+            // extraSpins: Higher number means more initial speed.
+            // duration: Total time in seconds for one full spin sequence.
             const extraSpins = 10 + Math.random() * 5;
             const randomAngle = Math.random() * 360;
             const totalRotation = currentRotation + (extraSpins * 360) + randomAngle;
