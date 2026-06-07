@@ -137,10 +137,10 @@
         /* Wheel Container */
         .wheel-outer-wrap {
             position: relative;
-            padding: 15px;
-            background: white;
+            padding: 12px;
+            background: #ffffff; /* Area outside the black ring is white */
             border-radius: 50%;
-            box-shadow: 0 0 0 10px rgba(255,255,255,0.1), 0 20px 50px rgba(0,0,0,0.5);
+            /* Removed shadow to clean up the gray area */
         }
 
         .wheel-container {
@@ -205,37 +205,97 @@
 
         /* Modal Styles */
         .premium-modal {
-            background: #fff;
+            background: #ffffff; /* Keeping the clean white background */
             color: #000;
-            border-radius: 2.5rem;
-            max-width: 400px;
-            width: 90%;
-            padding: 3rem 2rem;
+            border-radius: 2rem; /* Slightly reduced radius */
+            max-width: 350px; /* Reduced width from 400px to 350px */
+            width: 85%;
+            padding: 2.5rem 1.5rem; /* Reduced padding from 3rem 2rem to 2.5rem 1.5rem */
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
+        
         .reward-display {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 2rem;
-            color: var(--spin-green-dark);
-            margin: 1.5rem 0;
+            font-size: 1.8rem; /* Reduced font size from 2.2rem to 1.8rem */
+            color: #D32F2F; /* Bold Crimson Red */
+            margin: 1.25rem 0;
             text-transform: uppercase;
         }
-        .gold-btn-premium {
-            background: var(--spin-green);
-            color: white;
+
+        .coupon-box {
+            background: #FFF3E0; /* Bold Peach/Cream */
+            border-radius: 1.25rem;
+            padding: 1.5rem 1rem; /* Slightly reduced padding */
+            margin: 1.5rem 0;
+        }
+
+        .coupon-label {
+            color: #E65100; /* Bold Deep Orange */
+            font-size: 0.7rem; /* Slightly smaller label */
             font-weight: 800;
             text-transform: uppercase;
-            padding: 1rem 2rem;
-            border-radius: 50px;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 1;
+        }
+
+        .coupon-code {
+            color: #BF360C; /* Bold Rust Red */
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem; /* Reduced font size from 2.2rem to 1.8rem */
+            letter-spacing: 3px;
+        }
+
+        .gold-btn-premium {
+            background: linear-gradient(135deg, #FF5722 0%, #D84315 100%); /* Bold Fire Gradient */
+            color: white;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 1rem 2rem; /* Reduced padding from 1.25rem to 1rem */
+            border-radius: 100px;
             border: none;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
             transition: all 0.3s ease;
+            letter-spacing: 2px;
+            font-size: 0.9rem; /* Slightly smaller font */
         }
-        .gold-btn-premium:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(76, 175, 80, 0.4); }
+        .gold-btn-premium:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255, 87, 34, 0.5); }
+
+        .modal-icon-wrap {
+            width: 70px; /* Reduced size from 80px to 70px */
+            height: 70px;
+            background: #FFEB3B; /* Bold Yellow */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 3px solid #FBC02D;
+        }
+
+        .congrats-text {
+            color: #FF6F00; /* Bold Amber */
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.75rem;
+        }
+
+        .sub-text {
+            color: #4E342E; /* Bold Coffee Brown */
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-top: 1.25rem;
+        }
 
         @keyframes toastSlideIn {
             from { transform: translateX(120%); }
@@ -331,12 +391,12 @@
         // You can add more segments or change the text, colors, and icons below.
         // Each object {} represents one slice of the wheel.
         const REWARDS = [
-            { text: "Free Main Course", color: "#6366f1", textColor: "#ffffff", icon: "🍱" },
-            { text: "5% Instant Discount", color: "#312e81", textColor: "#ffffff", icon: "📉" },
-            { text: "10% Flat Discount", color: "#ffffff", textColor: "#1f2937", icon: "💰" },
-            { text: "15% Special Offer", color: "#fce7f3", textColor: "#9d174d", icon: "✨" },
-            { text: "20% On Next Order", color: "#ccfbf1", textColor: "#134e4a", icon: "🎁" },
-            { text: "Free Dessert Platter", color: "#a5f3fc", textColor: "#164e63", icon: "🍰" }
+            { text: "Free Main Course", color: "#C62828", textColor: "#ffffff", icon: "🍱" }, // Deep Red
+            { text: "5% Instant Discount", color: "#2E7D32", textColor: "#ffffff", icon: "📉" }, // Deep Green
+            { text: "10% Flat Discount", color: "#1565C0", textColor: "#ffffff", icon: "💰" }, // Deep Blue
+            { text: "15% Special Offer", color: "#EF6C00", textColor: "#ffffff", icon: "✨" }, // Deep Orange
+            { text: "20% On Next Order", color: "#6A1B9A", textColor: "#ffffff", icon: "🎁" }, // Deep Purple
+            { text: "Free Dessert Platter", color: "#00838F", textColor: "#ffffff", icon: "🍰" }  // Deep Cyan/Teal
         ];
 
         const svg = document.getElementById('wheel-svg');
@@ -478,15 +538,17 @@
             });
 
             // Outer Border Dots
-            for (let i = 0; i < 24; i++) {
-                const dotAngle = i * (360 / 24);
+            const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            ring.setAttribute("cx", "200"); ring.setAttribute("cy", "200"); ring.setAttribute("r", "194");
+            ring.setAttribute("fill", "none"); ring.setAttribute("stroke", "#000"); ring.setAttribute("stroke-width", "12");
+            svg.appendChild(ring);
+
+            for (let i = 0; i < 30; i++) {
+                const dotAngle = i * (360 / 30);
+                const dx = 200 + 194 * Math.cos((dotAngle - 90) * Math.PI / 180);
+                const dy = 200 + 194 * Math.sin((dotAngle - 90) * Math.PI / 180);
                 const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                const dx = 200 + 195 * Math.cos((dotAngle - 90) * Math.PI / 180);
-                const dy = 200 + 195 * Math.sin((dotAngle - 90) * Math.PI / 180);
-                dot.setAttribute("cx", dx);
-                dot.setAttribute("cy", dy);
-                dot.setAttribute("r", "3");
-                dot.setAttribute("fill", "#ddd");
+                dot.setAttribute("cx", dx); dot.setAttribute("cy", dy); dot.setAttribute("r", "3.5"); dot.setAttribute("fill", "#fff");
                 svg.appendChild(dot);
             }
         }
@@ -579,20 +641,8 @@
         function closeModal() {
             document.getElementById('success-modal').classList.add('hidden');
             
-            // Reset modal UI for next time
-            setTimeout(() => {
-                document.getElementById('win-reward-text').className = 'reward-display';
-                document.getElementById('win-reward-text').innerHTML = 'REWARD';
-                
-                const p = document.querySelector('.premium-modal p');
-                p.innerHTML = 'An exclusive gift has been unlocked for you.<br>Claim it now to secure your reward.';
-                
-                const btn = document.querySelector('.gold-btn-premium');
-                btn.textContent = "Claim Reward";
-                btn.onclick = claimReward;
-                
-                currentReward = null;
-            }, 300);
+            // Refresh the page to ensure a clean state for the next spin
+            window.location.reload();
         }
 
         window.onload = drawWheel;
