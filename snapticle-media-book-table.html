@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Ranking -->
+    <title>Snapticle Media Dining | Premium Table Reservation</title>
+    <meta name="description" content="Experience the art of fine dining at Snapticle Media Dining. Book your table online for an exquisite culinary journey with master chefs and premium service.">
+    <meta name="keywords" content="Snapticle Media, Restaurant Booking, Table Reservation, Fine Dining Delhi, Premium Restaurant, Book Table Online">
+    <link rel="canonical" href="https://snapticlemedia.in/snapticle-media-book-table.html" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://snapticlemedia.in/snapticle-media-book-table.html">
+    <meta property="og:title" content="Snapticle Media Dining | Premium Table Reservation">
+    <meta property="og:description" content="Reserve your table at Snapticle Media Dining for a premium culinary experience.">
+    <meta property="og:image" content="https://snapticlemedia.in/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://snapticlemedia.in/snapticle-media-book-table.html">
+    <meta property="twitter:title" content="Snapticle Media Dining | Premium Table Reservation">
+    <meta property="twitter:description" content="Reserve your table at Snapticle Media Dining for a premium culinary experience.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        modern: {
+                            primary: '#6366f1',
+                            secondary: '#8b5cf6',
+                            accent: '#f43f5e',
+                            surface: '#ffffff',
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --pjs-font: 'Plus Jakarta Sans', sans-serif;
+            --primary: #dc2626; /* Petpooja Red */
+            --primary-hover: #b91c1c;
+            --secondary: #94a3b8;
+            --bg-dark: #020617; /* Deep Navy Black */
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: var(--pjs-font);
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .petpooja-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(30, 58, 138, 0.1) 0%, transparent 40%);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(220, 38, 38, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .modern-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .modern-input:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
+            outline: none;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(220, 38, 38, 0.2);
+        }
+
+        .option-card.active {
+            border-color: var(--primary);
+            background: rgba(220, 38, 38, 0.1);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.15);
+        }
+
+        .option-card.active i { color: var(--primary); }
+
+        .btn-premium {
+            background: var(--primary);
+            color: #ffffff;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.39);
+        }
+
+        .btn-premium:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .nav-scrolled {
+            background: rgba(2, 6, 23, 0.8) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col pjs">
+    
+    <div class="petpooja-bg"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 px-4 md:px-12 py-6 transition-all duration-500">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-2xl">
+                    <i data-lucide="utensils" class="text-slate-900 w-7 h-7"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tighter text-white leading-none">SNAPTICLE<span class="text-red-600">.</span></span>
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-red-500 uppercase">Premium Dining</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#" class="text-sm font-bold text-white hover:text-red-500 transition-colors">Our Story</a>
+                <a href="#" class="text-sm font-bold text-white hover:text-red-500 transition-colors">Menu</a>
+                <a href="#" class="text-sm font-bold text-white hover:text-red-500 transition-colors">Private Dining</a>
+                <a href="#reservation-form" class="btn-premium px-8 py-3 rounded-lg text-sm font-bold">Book a Table</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center px-4 md:px-6 pt-32 md:pt-48 pb-20 md:pb-32">
+        <div class="max-w-6xl w-full space-y-16 md:space-y-24">
+            <div class="text-center space-y-8 reveal">
+                <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight text-white leading-[1] max-w-4xl mx-auto">
+                    Experience the Art of <span class="text-red-600">Fine Dining</span>
+                </h1>
+                <p class="text-slate-400 font-medium text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Indulge in a symphony of flavors crafted by world-class chefs. Book your spot today for an unforgettable culinary journey at Snapticle Media Dining.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#reservation-form" class="btn-premium px-10 py-5 rounded-xl text-lg font-bold w-full sm:w-auto">Reserve Your Table</a>
+                    <a href="#" class="px-10 py-5 rounded-xl text-lg font-bold text-white border border-white/10 hover:bg-white/5 transition-all w-full sm:w-auto">Explore Menu</a>
+                </div>
+            </div>
+
+            <div id="reservation-form-container" class="relative">
+                <!-- Decorative Elements -->
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl"></div>
+
+                <form id="reservation-form" class="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 space-y-12 relative overflow-hidden reveal" style="transition-delay: 0.2s">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div class="space-y-2">
+                            <h2 class="text-3xl font-extrabold text-white">Reservation Details</h2>
+                            <p class="text-slate-400 text-sm">Secure your spot at our premium dining hub.</p>
+                        </div>
+                        <div class="flex items-center gap-4 bg-white/5 px-6 py-3 rounded-2xl border border-white/5">
+                            <span id="progress-text" class="text-sm font-bold text-red-500">0%</span>
+                            <div class="w-32 h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div id="progress-bar" class="h-full bg-red-600 transition-all duration-700" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12 md:gap-20">
+                        <!-- Guest Info -->
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-red-600/10 flex items-center justify-center text-red-500 border border-red-600/20">
+                                    <i data-lucide="users" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white uppercase tracking-widest">Guest Profile</h3>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">Full Name</label>
+                                    <input type="text" name="name" required placeholder="e.g. Rahul Sharma" class="w-full px-6 py-4 rounded-2xl modern-input text-base font-semibold placeholder:text-slate-600">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">WhatsApp Number</label>
+                                    <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" class="w-full px-6 py-4 rounded-2xl modern-input text-base font-semibold placeholder:text-slate-600">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">Email Address</label>
+                                    <input type="email" name="email" required placeholder="rahul@example.com" class="w-full px-6 py-4 rounded-2xl modern-input text-base font-semibold placeholder:text-slate-600">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Booking Info -->
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-600/10 flex items-center justify-center text-blue-500 border border-blue-600/20">
+                                    <i data-lucide="layout" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white uppercase tracking-widest">Seating Preference</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4" id="table-grid">
+                                <div class="option-card p-6 rounded-2xl cursor-pointer text-center group" data-value="Main Dining">
+                                    <i data-lucide="utensils-cross" class="w-6 h-6 mx-auto text-slate-600 mb-3 group-hover:text-red-500 transition-colors"></i>
+                                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400">Main Hall</span>
+                                </div>
+                                <div class="option-card p-6 rounded-2xl cursor-pointer text-center group" data-value="Window Side">
+                                    <i data-lucide="maximize" class="w-6 h-6 mx-auto text-slate-600 mb-3 group-hover:text-red-500 transition-colors"></i>
+                                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400">Window View</span>
+                                </div>
+                                <div class="option-card p-6 rounded-2xl cursor-pointer text-center group" data-value="VIP Cabin">
+                                    <i data-lucide="crown" class="w-6 h-6 mx-auto text-slate-600 mb-3 group-hover:text-red-500 transition-colors"></i>
+                                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400">VIP Lounge</span>
+                                </div>
+                                <div class="option-card p-6 rounded-2xl cursor-pointer text-center group" data-value="Rooftop">
+                                    <i data-lucide="cloud" class="w-6 h-6 mx-auto text-slate-600 mb-3 group-hover:text-red-500 transition-colors"></i>
+                                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400">Rooftop</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="table_type" id="table_input" required>
+
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">Preferred Date</label>
+                                    <input type="date" name="date" required class="w-full px-5 py-4 rounded-2xl modern-input text-sm font-bold" style="color-scheme: dark; background: #0f172a;">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 ml-1">Time Slot</label>
+                                    <div class="relative">
+                                        <select name="time" class="w-full px-5 py-4 rounded-2xl modern-input text-sm font-bold appearance-none bg-transparent" style="color-scheme: dark;">
+                                            <option value="19:00" style="background: #0f172a;">07:00 PM</option>
+                                            <option value="20:00" style="background: #0f172a;">08:00 PM</option>
+                                            <option value="21:00" style="background: #0f172a;">09:00 PM</option>
+                                            <option value="22:00" style="background: #0f172a;">10:00 PM</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Section -->
+                    <div class="pt-12 border-t border-white/5 space-y-10">
+                        <div class="grid md:grid-cols-2 gap-12">
+                            <div class="space-y-6">
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] ml-1">Occasion Type</label>
+                                <div class="flex flex-wrap gap-3">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="occasion" value="Dinner" checked class="hidden peer">
+                                        <div class="px-8 py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest peer-checked:border-red-600 peer-checked:text-red-600 peer-checked:bg-red-600/10 transition-all text-slate-500 hover:bg-white/5">Dinner</div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="occasion" value="Birthday" class="hidden peer">
+                                        <div class="px-8 py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest peer-checked:border-red-600 peer-checked:text-red-600 peer-checked:bg-red-600/10 transition-all text-slate-500 hover:bg-white/5">Birthday</div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="occasion" value="Anniversary" class="hidden peer">
+                                        <div class="px-8 py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest peer-checked:border-red-600 peer-checked:text-red-600 peer-checked:bg-red-600/10 transition-all text-slate-500 hover:bg-white/5">Anniversary</div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-[0.2em] ml-1">Additional Requests</label>
+                                <textarea name="requests" rows="2" placeholder="Tell us about any dietary preferences..." class="w-full px-6 py-4 rounded-2xl modern-input text-sm font-medium placeholder:text-slate-700" style="color-scheme: dark;"></textarea>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn" class="btn-premium w-full py-6 rounded-2xl text-white text-lg font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4">
+                            Secure Your Table
+                            <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Features -->
+            <div class="grid md:grid-cols-3 gap-8 reveal">
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/5 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-600/20">
+                        <i data-lucide="chef-hat" class="text-white w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Master Chefs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Taste the finest ingredients transformed into culinary masterpieces by our award-winning experts.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/5 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
+                        <i data-lucide="sparkles" class="text-white w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Exquisite Ambiance</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Enjoy your meal in a carefully curated environment designed for comfort, luxury, and style.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/5 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
+                        <i data-lucide="gem" class="text-white w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Premium Service</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Experience hospitality that goes above and beyond to make your visit truly special and memorable.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-20 px-6 bg-slate-950 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2 space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <i data-lucide="utensils" class="text-slate-900 w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-black text-white">SNAPTICLE<span class="text-red-600">.</span></span>
+                </div>
+                <p class="text-slate-500 text-sm max-w-sm leading-relaxed">
+                    Elevating the dining experience through culinary excellence and unmatched hospitality. Snapticle Media Dining is where every meal becomes a celebration.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-red-600 transition-all shadow-lg group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-red-600 transition-all shadow-lg group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-red-600 transition-all shadow-lg group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <h4 class="text-white font-bold uppercase tracking-widest text-xs">Quick Links</h4>
+                <ul class="space-y-4 text-sm text-slate-500 font-medium">
+                    <li><a href="#" class="hover:text-red-500 transition-colors">Home</a></li>
+                    <li><a href="#" class="hover:text-red-500 transition-colors">Our Menu</a></li>
+                    <li><a href="#" class="hover:text-red-500 transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-red-500 transition-colors">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-6">
+                <h4 class="text-white font-bold uppercase tracking-widest text-xs">Contact Us</h4>
+                <ul class="space-y-4 text-sm text-slate-500 font-medium">
+                    <li class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-red-500"></i> +91 800 SNAPTICLE</li>
+                    <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-red-500"></i> reserve@snapticle.media</li>
+                    <li class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-red-500"></i> New Delhi, India</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-center">
+            <p class="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-600">
+                © 2024 SNAPTICLE MEDIA DINING. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-xl"></div>
+        <div class="relative bg-slate-900 max-w-md w-full p-10 md:p-12 rounded-[2.5rem] text-center space-y-8 shadow-2xl border border-white/5">
+            <div class="w-24 h-24 bg-red-600 rounded-[2rem] flex items-center justify-center mx-auto shadow-2xl shadow-red-600/40 transform rotate-12">
+                <i data-lucide="check" class="w-12 h-12 text-white"></i>
+            </div>
+            <div class="space-y-3">
+                <h2 class="text-3xl font-extrabold text-white">Table Secured!</h2>
+                <p class="text-slate-400 text-sm">Your premium dining experience is just a visit away.</p>
+            </div>
+            <div class="bg-white/5 p-8 rounded-3xl text-left space-y-5 border border-white/5">
+                <div class="flex justify-between items-center pb-4 border-b border-white/5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Booking Ref</span>
+                    <span id="booking-id" class="text-red-500 font-black tracking-tighter">--</span>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-2">Date</p>
+                        <p id="confirm-date" class="font-bold text-white">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-2">Time</p>
+                        <p id="confirm-time" class="font-bold text-white">--</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeModal()" class="w-full py-5 bg-white text-slate-900 rounded-2xl text-sm font-black uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all">Close Window</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] px-8 py-4 bg-red-600 text-white rounded-2xl flex items-center gap-4 translate-y-32 opacity-0 transition-all duration-500 shadow-2xl">
+        <div id="toast-icon"></div>
+        <p id="toast-message" class="font-bold text-xs uppercase tracking-widest"></p>
+    </div>
+
+    <script>
+        const TELEGRAM_CONFIG = {
+            botToken: '8776802733:AAHR0yq-XXDh2a1jE50q0Fs0rxhYtCyTaV8',
+            chatId: '5519154395'
+        };
+
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+                nav.classList.replace('py-6', 'py-4');
+            } else {
+                nav.classList.remove('nav-scrolled');
+                nav.classList.replace('py-4', 'py-6');
+            }
+        });
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        const optionCards = document.querySelectorAll('.option-card');
+        const tableInput = document.getElementById('table_input');
+
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                optionCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                tableInput.value = card.dataset.value;
+                updateProgress();
+                
+                gsap.from(card, { scale: 0.95, duration: 0.3, ease: "back.out(2)" });
+            });
+        });
+
+        const form = document.getElementById('reservation-form');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        function updateProgress() {
+            const fields = [
+                form.name.value,
+                form.phone.value,
+                form.email.value,
+                tableInput.value,
+                form.date.value
+            ];
+            const filled = fields.filter(f => f.trim() !== '').length;
+            const percentage = Math.round((filled / fields.length) * 100);
+            progressBar.style.width = percentage + '%';
+            progressText.innerText = percentage + '%';
+        }
+
+        form.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            if (!tableInput.value) {
+                showToast("Please select a seating area", "alert-circle");
+                return;
+            }
+
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></span>`;
+
+            const data = Object.fromEntries(new FormData(form).entries());
+            data.bookingId = `RES-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+
+            const message = `
+🚀 *PREMIUM TABLE RESERVATION*
+━━━━━━━━━━━━━━━
+👤 *Guest:* ${data.name}
+📞 *WhatsApp:* ${data.phone}
+📧 *Email:* ${data.email}
+🪑 *Seating:* ${data.table_type.toUpperCase()}
+📅 *Date:* ${data.date}
+⏰ *Time Slot:* ${data.time}
+✨ *Occasion:* ${data.occasion.toUpperCase()}
+📝 *Requests:* ${data.requests || 'None'}
+🆔 *Ref ID:* ${data.bookingId}
+━━━━━━━━━━━━━━━
+_Sent via Snapticle Premium Hub_`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                document.getElementById('booking-id').innerText = data.bookingId;
+                document.getElementById('confirm-date').innerText = data.date;
+                document.getElementById('confirm-time').innerText = data.time;
+                document.getElementById('success-modal').classList.remove('hidden');
+                
+                confetti({ 
+                    particleCount: 150, 
+                    spread: 70, 
+                    origin: { y: 0.6 }, 
+                    colors: ['#dc2626', '#ffffff', '#0f172a'] 
+                });
+
+                gsap.from("#success-modal > div:last-child", {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.7)"
+                });
+
+            } catch (err) {
+                showToast("Submission failed. Try again.", "alert-circle");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        };
+
+        function showToast(msg, icon) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            document.getElementById('toast-icon').innerHTML = `<i data-lucide="${icon}"></i>`;
+            lucide.createIcons();
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-32', 'opacity-0'), 3000);
+        }
+
+        function closeModal() {
+            gsap.to("#success-modal > div:last-child", {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.4,
+                onComplete: () => {
+                    document.getElementById('success-modal').classList.add('hidden');
+                    form.reset();
+                    optionCards.forEach(c => c.classList.remove('active'));
+                    tableInput.value = '';
+                    updateProgress();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Reset modal for next time
+                    gsap.set("#success-modal > div:last-child", { scale: 1, opacity: 1 });
+                }
+            });
+        }
+
+        document.querySelector('input[name="date"]').min = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
