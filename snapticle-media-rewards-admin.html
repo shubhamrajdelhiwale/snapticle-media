@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapticle Media - Admin Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="snapticle-media-rewards-config.js"></script>
+    <link rel="stylesheet" href="snapticle-media-rewards-styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .premium-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
+        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50">
+    <!-- Admin Login Overlay -->
+    <div id="admin-login-overlay" class="fixed inset-0 z-[100] bg-slate-900 flex items-center justify-center p-6">
+        <div class="bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center space-y-8 animate-slide-up">
+            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-xl shadow-indigo-500/10">
+                <i data-lucide="shield-check" class="w-10 h-10"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Admin Access</h2>
+                <p class="text-sm text-slate-500 font-medium">Please enter your staff secret code.</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="admin-login-code" placeholder="••••" class="w-full p-6 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all text-center font-black text-4xl tracking-[0.5em]">
+                <button onclick="handleAdminLogin()" class="w-full premium-gradient text-white font-black py-6 rounded-2xl shadow-xl shadow-indigo-500/20 active:scale-[0.98] transition-all">Unlock Dashboard</button>
+            </div>
+            <button onclick="window.location.href='snapticle-media-rewards-index.html'" class="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">Back to Customer App</button>
+        </div>
+    </div>
+
+    <!-- 3. Premium Admin Panel (Full Screen) -->
+    <section id="admin-screen" class="hidden min-h-screen bg-slate-50 flex flex-col lg:flex-row">
+        <!-- Mobile Header -->
+        <header class="lg:hidden bg-gray-900 text-white p-4 flex justify-between items-center sticky top-0 z-[60]">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-white"></i>
+                </div>
+                <span class="font-black tracking-tight text-lg">Snapticle<span class="text-indigo-500">Media</span></span>
+            </div>
+            <button onclick="toggleMobileSidebar()" class="p-2 hover:bg-white/10 rounded-lg">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </header>
+
+        <!-- Sidebar -->
+        <aside id="admin-sidebar" class="w-72 bg-gray-900 text-white flex flex-col fixed lg:sticky inset-y-0 left-0 z-50 shadow-2xl transition-transform -translate-x-full lg:translate-x-0">
+            <div class="p-8 border-b border-white/5 hidden lg:block">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-black tracking-tight text-xl">Snapticle<span class="text-indigo-500">Media</span></h2>
+                        <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Management Suite</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
+                <p class="px-4 text-[10px] font-black text-gray-600 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                <button onclick="switchAdminTab('overview')" id="nav-overview" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl bg-indigo-600 text-white font-bold transition-all group shadow-lg shadow-indigo-500/20">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </button>
+                <button onclick="switchAdminTab('customers')" id="nav-customers" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Customers</span>
+                </button>
+                <button onclick="switchAdminTab('analytics')" id="nav-analytics" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="pie-chart" class="w-5 h-5"></i>
+                    <span>Analytics</span>
+                </button>
+                
+                <p class="px-4 text-[10px] font-black text-gray-600 uppercase tracking-[0.2em] mt-8 mb-4">Configuration</p>
+                <button onclick="switchAdminTab('rewards')" id="nav-rewards" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="settings-2" class="w-5 h-5"></i>
+                    <span>Rewards Policy</span>
+                </button>
+                <button onclick="switchAdminTab('settings')" id="nav-settings" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="store" class="w-5 h-5"></i>
+                    <span>Store Settings</span>
+                </button>
+            </nav>
+
+            <div class="p-6">
+                <button onclick="window.location.href='snapticle-media-rewards-index.html'" class="w-full bg-white/5 hover:bg-red-500/10 hover:text-red-500 p-5 rounded-2xl flex items-center justify-center space-x-3 transition-all font-bold text-gray-400">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                    <span>Exit Admin</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay (Mobile only) -->
+        <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 min-h-screen relative overflow-x-hidden">
+            <header class="hidden lg:flex sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-10 py-6 justify-between items-center">
+                <div>
+                    <h1 id="admin-page-title" class="text-3xl font-black text-slate-900 tracking-tight">Overview</h1>
+                    <p class="text-sm text-slate-500 font-medium">Manage your restaurant loyalty ecosystem.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="text-right">
+                        <p id="admin-current-date" class="text-xs font-black text-slate-400 uppercase tracking-widest">---</p>
+                        <p class="text-sm font-bold text-slate-900">Restaurant Dashboard</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <i data-lucide="bell" class="w-5 h-5 text-slate-600"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-4 lg:p-10">
+                <!-- Overview Section -->
+                <section id="admin-overview" class="space-y-6 lg:space-y-10 animate-slide-up">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+                        <div class="bg-white p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all group">
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 lg:mb-6 group-hover:scale-110 transition-all"><i data-lucide="users" class="w-5 h-5 lg:w-7 lg:h-7"></i></div>
+                            <p class="text-[8px] lg:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Members</p>
+                            <h3 id="stat-total-members" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter">0</h3>
+                        </div>
+                        <div class="bg-white p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-purple-500/5 transition-all group">
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 lg:mb-6 group-hover:scale-110 transition-all"><i data-lucide="rotate-cw" class="w-5 h-5 lg:w-7 lg:h-7"></i></div>
+                            <p class="text-[8px] lg:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Today's Spins</p>
+                            <h3 id="stat-daily-spins" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter">0</h3>
+                        </div>
+                        <div class="bg-white p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-green-500/5 transition-all group">
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-green-50 text-green-600 flex items-center justify-center mb-4 lg:mb-6 group-hover:scale-110 transition-all"><i data-lucide="piggy-bank" class="w-5 h-5 lg:w-7 lg:h-7"></i></div>
+                            <p class="text-[8px] lg:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Redeemed</p>
+                            <h3 id="stat-points-redeemed" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter">₹0</h3>
+                        </div>
+                        <div class="bg-white p-6 lg:p-8 rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-orange-500/5 transition-all group">
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-4 lg:mb-6 group-hover:scale-110 transition-all"><i data-lucide="zap" class="w-5 h-5 lg:w-7 lg:h-7"></i></div>
+                            <p class="text-[8px] lg:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Retention Rate</p>
+                            <h3 id="stat-retention" class="text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter">0%</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10">
+                        <div class="lg:col-span-2 bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm">
+                            <div class="px-6 lg:px-8 py-4 lg:py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                                <h4 class="font-black text-[10px] lg:text-xs uppercase tracking-widest text-slate-900">Recent Redemptions</h4>
+                                <button class="text-[8px] lg:text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">View All</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left min-w-[500px] lg:min-w-full">
+                                    <thead>
+                                        <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                            <th class="px-6 lg:px-8 py-4 lg:py-6">Customer</th>
+                                            <th class="px-6 lg:px-8 py-4 lg:py-6">Value</th>
+                                            <th class="px-6 lg:px-8 py-4 lg:py-6">Date</th>
+                                            <th class="px-6 lg:px-8 py-4 lg:py-6">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-redemptions-table" class="divide-y divide-slate-100">
+                                        <!-- Rows injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 p-6 lg:p-8 shadow-sm">
+                            <h4 class="font-black text-[10px] lg:text-xs uppercase tracking-widest text-slate-900 mb-6 lg:mb-8 text-center">Reward Distribution</h4>
+                            <div class="relative aspect-square max-w-[250px] mx-auto">
+                                <canvas id="rewardsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Customers Section -->
+                <section id="admin-customers" class="hidden animate-slide-up space-y-6 lg:space-y-8">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                        <div class="relative w-full lg:w-96 group">
+                            <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                            <input type="text" id="customer-search" oninput="filterCustomers()" placeholder="Search customers..." class="w-full pl-14 pr-6 py-4 rounded-2xl lg:rounded-[1.5rem] bg-white border border-slate-200 outline-none focus:border-indigo-500 transition-all font-medium text-sm">
+                        </div>
+                        <button onclick="exportCustomersCSV()" class="w-full lg:w-auto bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center space-x-3 hover:bg-slate-800 transition-all shadow-lg">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-[2rem] lg:rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left min-w-[700px] lg:min-w-full">
+                                <thead>
+                                    <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 bg-slate-50/50">
+                                        <th class="px-6 lg:px-8 py-4 lg:py-6">Customer Profile</th>
+                                        <th class="px-6 lg:px-8 py-4 lg:py-6">Tier Status</th>
+                                        <th class="px-6 lg:px-8 py-4 lg:py-6">Points</th>
+                                        <th class="px-6 lg:px-8 py-4 lg:py-6">Visits</th>
+                                        <th class="px-6 lg:px-8 py-4 lg:py-6 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customer-list-table" class="divide-y divide-slate-100">
+                                    <!-- Rows injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="admin-analytics" class="hidden animate-slide-up space-y-6 lg:space-y-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+                        <div class="bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[3rem] border border-slate-200 shadow-sm">
+                            <h4 class="font-black text-[10px] lg:text-xs uppercase tracking-widest text-slate-900 mb-6 lg:mb-10">Revenue Impact</h4>
+                            <div class="aspect-video"><canvas id="revenueChart"></canvas></div>
+                        </div>
+                        <div class="bg-white p-6 lg:p-10 rounded-[2rem] lg:rounded-[3rem] border border-slate-200 shadow-sm">
+                            <h4 class="font-black text-[10px] lg:text-xs uppercase tracking-widest text-slate-900 mb-6 lg:mb-10">User Growth</h4>
+                            <div class="aspect-video"><canvas id="userChart"></canvas></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Rewards Config Section -->
+                <section id="admin-rewards" class="hidden animate-slide-up max-w-2xl mx-auto">
+                    <div class="bg-white p-8 lg:p-12 rounded-[2rem] lg:rounded-[3rem] border border-slate-200 shadow-sm space-y-8 lg:space-y-10">
+                        <div class="text-center">
+                            <div class="w-16 h-16 lg:w-20 lg:h-20 bg-indigo-50 text-indigo-600 rounded-2xl lg:rounded-3xl flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-xl shadow-indigo-500/10"><i data-lucide="percent" class="w-8 h-8 lg:w-10 lg:h-10"></i></div>
+                            <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Redemption Policy</h3>
+                            <p class="text-xs lg:text-sm text-slate-500 font-medium">Define how points translate to currency.</p>
+                        </div>
+                        
+                        <div class="space-y-4 lg:space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Point Value (10 Pts = ₹?)</label>
+                                <input type="number" id="config-point-value" class="w-full p-5 lg:p-6 rounded-xl lg:rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-black text-lg lg:text-xl text-indigo-600">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Max Bill Discount (%)</label>
+                                <input type="number" id="config-max-discount" class="w-full p-5 lg:p-6 rounded-xl lg:rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-black text-lg lg:text-xl text-indigo-600">
+                            </div>
+                            <button onclick="saveConfig()" class="w-full premium-gradient text-white font-black py-5 lg:py-6 rounded-xl lg:rounded-[1.5rem] shadow-xl shadow-indigo-500/20 active:scale-[0.98] transition-all">Update Policy</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Store Settings Section -->
+                <section id="admin-settings" class="hidden animate-slide-up max-w-2xl mx-auto">
+                    <div class="bg-white p-8 lg:p-12 rounded-[2rem] lg:rounded-[3rem] border border-slate-200 shadow-sm space-y-8 lg:space-y-10">
+                        <div class="text-center">
+                            <div class="w-16 h-16 lg:w-20 lg:h-20 bg-slate-50 text-slate-900 rounded-2xl lg:rounded-3xl flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-xl shadow-slate-900/5"><i data-lucide="store" class="w-8 h-8 lg:w-10 lg:h-10"></i></div>
+                            <h3 class="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Store Configuration</h3>
+                            <p class="text-xs lg:text-sm text-slate-500 font-medium">Update your business profile and security.</p>
+                        </div>
+                        
+                        <div class="space-y-4 lg:space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Restaurant Name</label>
+                                <input type="text" id="settings-name" placeholder="Restaurant Name" class="w-full p-5 lg:p-6 rounded-xl lg:rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Admin Secret Code</label>
+                                <input type="password" id="settings-secret" placeholder="Secret Code" class="w-full p-5 lg:p-6 rounded-xl lg:rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-bold tracking-widest">
+                            </div>
+                            <button onclick="saveSettings()" class="w-full bg-slate-900 text-white font-black py-5 lg:py-6 rounded-xl lg:rounded-[1.5rem] shadow-xl shadow-slate-900/20 active:scale-[0.98] transition-all">Save Changes</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </section>
+
+    <!-- Admin Verify Modal -->
+    <div id="verify-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] hidden flex items-center justify-center px-6">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-sm p-8 text-center">
+            <h2 class="text-2xl font-bold mb-6">Verify Visit</h2>
+            <div class="space-y-4 mb-6">
+                <input type="text" id="verify-id-input" placeholder="Customer ID" class="w-full p-4 rounded-2xl bg-gray-50 font-mono text-center">
+                <input type="password" id="verify-secret-input" placeholder="Secret Code" class="w-full p-4 rounded-2xl bg-gray-50 font-mono text-center">
+            </div>
+            <div class="flex space-x-3">
+                <button onclick="closeVerifyModal()" class="flex-1 bg-gray-100 p-4 rounded-2xl">Cancel</button>
+                <button onclick="confirmVisit()" class="flex-1 bg-indigo-600 text-white font-bold p-4 rounded-2xl">Verify</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="snapticle-media-rewards-admin.js"></script>
+</body>
+</html>

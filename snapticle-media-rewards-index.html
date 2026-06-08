@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapticle Media - Premium Restaurant Loyalty & Rewards</title>
+    <meta name="description" content="Join Snapticle Media's exclusive Restaurant Loyalty Program. Earn points, unlock VIP tiers (Bronze to Platinum), and get daily rewards.">
+    <meta name="keywords" content="Snapticle Media, Restaurant Loyalty, Rewards Program, Food Rewards, Loyalty Card, Daily Spin">
+    <meta name="author" content="Snapticle Media">
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Snapticle Media - Premium Restaurant Loyalty & Rewards">
+    <meta property="og:description" content="Elevate your dining experience with our premium rewards program.">
+    <meta property="og:image" content="https://snapticlemedia.in/assets/loyalty-preview.jpg">
+    <meta property="og:url" content="https://snapticlemedia.in">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link rel="canonical" href="https://snapticlemedia.in">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="snapticle-media-rewards-config.js"></script>
+    <link rel="stylesheet" href="snapticle-media-rewards-styles.css">
+    <link rel="manifest" href="snapticle-media-rewards-manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .premium-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
+        .glass-dark { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-shadow { box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.1); }
+        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        #wheel-container { position: relative; width: 300px; height: 300px; margin: 0 auto; }
+        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #fff; transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); }
+        #wheel-pointer { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 40px; z-index: 10; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50">
+    <!-- 1. Full-Width Onboarding Screen -->
+    <section id="onboarding-screen" class="min-h-screen relative flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="bg">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 w-full max-w-7xl px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white space-y-8 animate-slide-up">
+                <div class="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/20">
+                    <i data-lucide="crown" class="text-yellow-400 w-5 h-5"></i>
+                    <span class="text-sm font-bold tracking-wider uppercase">Snapticle Media Rewards</span>
+                </div>
+                <h1 class="text-6xl lg:text-8xl font-black leading-none tracking-tight">
+                    Elevate Your <br>
+                    <span class="text-transparent bg-clip-text premium-gradient">Dining Life.</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-lg leading-relaxed">
+                    Join an exclusive circle of food enthusiasts. Earn points, unlock VIP tiers, and enjoy handcrafted rewards at every visit.
+                </p>
+                <div class="flex items-center space-x-6">
+                    <div class="flex -space-x-4">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-12 h-12 rounded-full border-4 border-black/50" alt="u">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-12 h-12 rounded-full border-4 border-black/50" alt="u">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-12 h-12 rounded-full border-4 border-black/50" alt="u">
+                    </div>
+                    <p class="text-sm font-medium"><span class="text-white font-bold">10,000+</span> members already joined</p>
+                </div>
+            </div>
+
+            <div class="animate-slide-up" style="animation-delay: 0.2s">
+                <div class="glass-dark p-8 lg:p-12 rounded-[3rem] border border-white/10 shadow-2xl max-w-md mx-auto lg:ml-auto">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-white mb-2">Get Started</h2>
+                    <p class="text-gray-400 mb-8">Create your membership in seconds.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="relative group">
+                            <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within:text-indigo-400 transition-colors"></i>
+                            <input type="text" id="reg-name" placeholder="Full Name" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-indigo-500/50 transition-all text-sm">
+                        </div>
+                        <div class="relative group">
+                            <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within:text-indigo-400 transition-colors"></i>
+                            <input type="tel" id="reg-phone" placeholder="Mobile Number" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-indigo-500/50 transition-all text-sm">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="relative group">
+                                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-indigo-400 transition-colors"></i>
+                                <input type="email" id="reg-email" placeholder="Email" class="w-full pl-10 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-indigo-500/50 transition-all text-xs">
+                            </div>
+                            <div class="relative group">
+                                <i data-lucide="message-square" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-indigo-400 transition-colors"></i>
+                                <input type="tel" id="reg-whatsapp" placeholder="WhatsApp" class="w-full pl-10 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-indigo-500/50 transition-all text-xs">
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <i data-lucide="users" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within:text-indigo-400 transition-colors"></i>
+                            <input type="text" id="reg-referral" placeholder="Referral Code (Optional)" class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-indigo-500/50 transition-all text-sm">
+                        </div>
+
+                        <button onclick="handleRegistration()" class="w-full premium-gradient text-white font-bold py-5 rounded-2xl shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+                            <span>Become a Member</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <p class="mt-8 text-center text-xs text-gray-500">
+                        By joining, you agree to our <a href="#" class="text-indigo-400 underline underline-offset-4">Terms & Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Customer App View (Mobile Container) -->
+    <div id="app" class="hidden max-w-md mx-auto min-h-screen relative pb-20 bg-[#f8fafc]">
+        
+        <!-- Main App Screen -->
+        <section id="main-screen">
+            <header class="px-6 py-8 flex items-center justify-between">
+                <div><h2 class="text-gray-500 text-sm">Welcome back,</h2><h1 id="user-display-name" class="text-2xl font-black text-gray-900 tracking-tight">User</h1></div>
+                <div id="user-tier-badge" class="px-4 py-1.5 rounded-2xl bg-white shadow-sm border border-gray-100 text-indigo-700 text-[10px] font-black tracking-widest flex items-center">BRONZE</div>
+            </header>
+
+            <div id="dashboard-tab" class="px-6 space-y-6">
+                <div class="premium-gradient rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl shadow-indigo-500/20">
+                    <div class="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="relative z-10 flex justify-between items-start mb-12">
+                        <div><p class="text-indigo-100 text-[10px] uppercase tracking-[0.2em] font-bold mb-1">Total Points</p><h3 id="points-balance" class="text-5xl font-black tracking-tighter">0</h3></div>
+                        <div class="bg-white/20 p-3 rounded-2xl backdrop-blur-md border border-white/20"><i data-lucide="qr-code" class="w-6 h-6"></i></div>
+                    </div>
+                    <div class="relative z-10 flex justify-between items-end">
+                        <div><p id="membership-id" class="text-[10px] font-mono opacity-60 mb-1 tracking-widest">REST-0000-0000</p><p id="membership-tier-name" class="text-sm font-black uppercase tracking-widest">Bronze Member</p></div>
+                        <div class="text-right"><p class="text-[10px] opacity-60 uppercase tracking-widest font-bold mb-1">Lifetime</p><p id="lifetime-points" class="font-black">0 pts</p></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 cursor-pointer group active:scale-95 transition-all" onclick="showVerificationQR()">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all"><i data-lucide="scan" class="w-6 h-6"></i></div>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Verify Visit</p>
+                        <h4 class="text-sm font-black text-gray-900">Show QR</h4>
+                    </div>
+                    <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-4"><i data-lucide="zap" class="w-6 h-6"></i></div>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Total Visits</p>
+                        <h4 id="visit-count" class="text-2xl font-black text-gray-900">0</h4>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center text-green-600"><i data-lucide="piggy-bank" class="w-6 h-6"></i></div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Total Savings</p>
+                            <h4 id="total-savings" class="text-2xl font-black text-green-600">₹0</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-4"><h4 class="font-black text-xs uppercase tracking-widest text-gray-900">Tier Progress</h4><span id="points-to-next" class="text-[10px] text-indigo-600 font-black uppercase tracking-widest">---</span></div>
+                    <div class="h-3 w-full bg-gray-50 rounded-full overflow-hidden border border-gray-100"><div id="tier-progress-bar" class="h-full premium-gradient rounded-full transition-all duration-1000" style="width: 0%"></div></div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4 py-4">
+                    <button onclick="switchTab('spin')" class="flex flex-col items-center space-y-3 group"><div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-purple-500 group-hover:scale-110 transition-all"><i data-lucide="rotate-cw" class="w-6 h-6"></i></div><span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Spin</span></button>
+                    <button onclick="switchTab('wallet')" class="flex flex-col items-center space-y-3 group"><div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-all"><i data-lucide="wallet" class="w-6 h-6"></i></div><span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Wallet</span></button>
+                    <button onclick="switchTab('redeem')" class="flex flex-col items-center space-y-3 group"><div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-pink-500 group-hover:scale-110 transition-all"><i data-lucide="shopping-bag" class="w-6 h-6"></i></div><span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Redeem</span></button>
+                    <button onclick="switchTab('history')" class="flex flex-col items-center space-y-3 group"><div class="w-14 h-14 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-amber-500 group-hover:scale-110 transition-all"><i data-lucide="clock" class="w-6 h-6"></i></div><span class="text-[10px] font-black uppercase tracking-widest text-gray-500">History</span></button>
+                </div>
+            </div>
+
+            <!-- Tabs Sections -->
+            <div id="spin-tab" class="hidden px-6 space-y-8 py-4 text-center">
+                <h3 class="text-2xl font-bold">Spin & Win</h3>
+                <div id="wheel-container"><img id="wheel-pointer" src="https://cdn-icons-png.flaticon.com/512/2276/2276931.png" alt="p"><canvas id="wheel" width="300" height="300"></canvas></div>
+                <button id="spin-btn" onclick="spinWheel()" class="premium-gradient text-white font-bold px-12 py-4 rounded-2xl">Spin Now</button>
+                <p id="spin-timer" class="mt-4 text-sm text-gray-400 hidden">Next spin in <span id="countdown">00:00:00</span></p>
+            </div>
+
+            <div id="wallet-tab" class="hidden px-6 space-y-6 py-4">
+                <h3 class="text-2xl font-bold">My Wallet</h3>
+                <div class="glass p-6 rounded-[2rem] premium-gradient text-white flex justify-between items-center">
+                    <div>
+                        <p class="text-xs opacity-80 uppercase tracking-wider">Available Points</p>
+                        <h4 id="wallet-points" class="text-3xl font-bold">0</h4>
+                    </div>
+                    <div class="bg-white/20 p-3 rounded-2xl">
+                        <i data-lucide="wallet" class="w-8 h-8"></i>
+                    </div>
+                </div>
+                <div class="flex p-1 bg-gray-100 rounded-2xl">
+                    <button onclick="toggleWalletTab('active')" id="btn-active-rewards" class="flex-1 py-3 rounded-xl text-sm font-bold bg-white shadow-sm text-indigo-600">Active</button>
+                    <button onclick="toggleWalletTab('expired')" id="btn-expired-rewards" class="flex-1 py-3 rounded-xl text-sm font-bold text-gray-500">Expired</button>
+                </div>
+                <div id="active-rewards-list" class="space-y-4"></div>
+                <div id="expired-rewards-list" class="hidden space-y-4"></div>
+            </div>
+
+            <div id="redeem-tab" class="hidden px-6 space-y-6 py-4">
+                <h3 class="text-2xl font-bold">Redeem Points</h3>
+                <div class="glass p-6 rounded-[2rem] space-y-6">
+                    <div class="flex justify-between items-center bg-indigo-50 p-4 rounded-2xl">
+                        <span class="text-indigo-600 font-bold text-sm">Available Points</span>
+                        <span id="available-points-calc" class="text-indigo-600 font-bold">0 pts</span>
+                    </div>
+                    <input type="number" id="bill-amount" oninput="calculateRedemption()" placeholder="Bill Amount" class="w-full px-4 py-4 rounded-2xl bg-gray-50 outline-none font-bold text-xl">
+                    <div class="space-y-4 border-t pt-6">
+                        <div class="flex justify-between text-sm"><span>Max (20%)</span><span id="max-discount">₹0</span></div>
+                        <div class="flex justify-between text-sm"><span>Points to Use</span><span id="points-to-use" class="font-bold text-indigo-600">0 pts</span></div>
+                        <div class="flex justify-between text-sm"><span>Discount</span><span id="discount-value" class="font-bold">- ₹0</span></div>
+                        <div class="flex justify-between text-lg font-bold"><span>Final Bill</span><span id="final-bill" class="text-indigo-600">₹0</span></div>
+                    </div>
+                    <button onclick="redeemPoints()" class="w-full premium-gradient text-white font-bold py-4 rounded-2xl">Confirm</button>
+                </div>
+            </div>
+
+            <div id="history-tab" class="hidden px-6 space-y-6 py-4">
+                <h3 class="text-2xl font-bold">History</h3>
+                <div id="history-list" class="space-y-4"></div>
+            </div>
+
+            <div id="profile-tab" class="hidden px-6 space-y-6 py-4">
+                <h3 class="text-2xl font-bold">Settings</h3>
+                <div class="glass p-6 rounded-[2rem] flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white">
+                        <i data-lucide="award" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase">Current Status</p>
+                        <h4 id="membership-tier-name-display" class="text-xl font-bold text-indigo-600">Bronze</h4>
+                    </div>
+                </div>
+                <button onclick="window.location.href='snapticle-media-rewards-admin.html'" class="w-full flex items-center justify-between p-4 bg-white rounded-3xl shadow-sm border"><div class="flex items-center space-x-4"><div class="w-10 h-10 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600"><i data-lucide="shield-check"></i></div><span class="font-bold">Admin Panel</span></div><i data-lucide="chevron-right"></i></button>
+                <button onclick="handleLogout()" class="w-full flex items-center justify-between p-4 bg-white rounded-3xl shadow-sm border text-red-600"><div class="flex items-center space-x-4"><div class="w-10 h-10 rounded-2xl bg-red-50 flex items-center justify-center"><i data-lucide="log-out"></i></div><span class="font-bold">Logout</span></div></button>
+                <button onclick="localStorage.clear(); location.reload();" class="w-full text-center text-gray-400 text-xs py-2">Clear App Data</button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/80 backdrop-blur-lg border-t px-6 py-3 flex justify-between items-center z-50">
+                <button onclick="switchTab('dashboard')" class="nav-item text-indigo-600" id="nav-dashboard"><i data-lucide="home"></i></button>
+                <button onclick="switchTab('spin')" class="nav-item text-gray-400" id="nav-spin"><i data-lucide="rotate-cw"></i></button>
+                <button onclick="switchTab('wallet')" class="nav-item text-gray-400" id="nav-wallet"><i data-lucide="wallet"></i></button>
+                <button onclick="switchTab('redeem')" class="nav-item text-gray-400" id="nav-redeem"><i data-lucide="shopping-bag"></i></button>
+                <button onclick="switchTab('history')" class="nav-item text-gray-400" id="nav-history"><i data-lucide="clock"></i></button>
+                <button onclick="switchTab('profile')" class="nav-item text-gray-400" id="nav-profile"><i data-lucide="user"></i></button>
+            </nav>
+        </section>
+    </div>
+
+    <!-- 3. Premium Admin Panel (Full Screen) -->
+    <section id="admin-screen" class="hidden min-h-screen bg-slate-50 flex">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-gray-900 text-white flex flex-col fixed inset-y-0 left-0 z-50 shadow-2xl">
+            <div class="p-8 border-b border-white/5">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-black tracking-tight text-xl">Admin<span class="text-indigo-500">Hub</span></h2>
+                        <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Management Suite</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
+                <p class="px-4 text-[10px] font-black text-gray-600 uppercase tracking-[0.2em] mb-4">Main Menu</p>
+                <button onclick="switchAdminTab('overview')" id="nav-overview" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl bg-indigo-600 text-white font-bold transition-all group shadow-lg shadow-indigo-500/20">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </button>
+                <button onclick="switchAdminTab('customers')" id="nav-customers" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Customers</span>
+                </button>
+                <button onclick="switchAdminTab('analytics')" id="nav-analytics" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="pie-chart" class="w-5 h-5"></i>
+                    <span>Analytics</span>
+                </button>
+                
+                <p class="px-4 text-[10px] font-black text-gray-600 uppercase tracking-[0.2em] mt-8 mb-4">Configuration</p>
+                <button onclick="switchAdminTab('rewards')" id="nav-rewards" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="settings-2" class="w-5 h-5"></i>
+                    <span>Rewards Policy</span>
+                </button>
+                <button onclick="switchAdminTab('settings')" id="nav-settings" class="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-gray-400 hover:bg-white/5 hover:text-white font-bold transition-all group">
+                    <i data-lucide="store" class="w-5 h-5"></i>
+                    <span>Store Settings</span>
+                </button>
+            </nav>
+
+            <div class="p-6">
+                <button onclick="exitAdminView()" class="w-full bg-white/5 hover:bg-red-500/10 hover:text-red-500 p-5 rounded-2xl flex items-center justify-center space-x-3 transition-all font-bold text-gray-400">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                    <span>Return to App</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 ml-72 min-h-screen relative">
+            <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-10 py-6 flex justify-between items-center">
+                <div>
+                    <h1 id="admin-page-title" class="text-3xl font-black text-slate-900 tracking-tight">Overview</h1>
+                    <p class="text-sm text-slate-500 font-medium">Manage your restaurant loyalty ecosystem.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="text-right">
+                        <p id="admin-current-date" class="text-xs font-black text-slate-400 uppercase tracking-widest">---</p>
+                        <p class="text-sm font-bold text-slate-900">Restaurant Dashboard</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <i data-lucide="bell" class="w-5 h-5 text-slate-600"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-10">
+                <!-- Overview Section -->
+                <section id="admin-overview" class="space-y-10 animate-slide-up">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-4 gap-8">
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all group">
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-all"><i data-lucide="users" class="w-7 h-7"></i></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Members</p>
+                            <h3 id="stat-total-members" class="text-4xl font-black text-slate-900 tracking-tighter">0</h3>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-purple-500/5 transition-all group">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-all"><i data-lucide="rotate-cw" class="w-7 h-7"></i></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Today's Spins</p>
+                            <h3 id="stat-daily-spins" class="text-4xl font-black text-slate-900 tracking-tighter">0</h3>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-green-500/5 transition-all group">
+                            <div class="w-14 h-14 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-all"><i data-lucide="piggy-bank" class="w-7 h-7"></i></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Redeemed</p>
+                            <h3 id="stat-points-redeemed" class="text-4xl font-black text-slate-900 tracking-tighter">₹0</h3>
+                        </div>
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-orange-500/5 transition-all group">
+                            <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-all"><i data-lucide="zap" class="w-7 h-7"></i></div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Retention Rate</p>
+                            <h3 id="stat-retention" class="text-4xl font-black text-slate-900 tracking-tighter">0%</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-10">
+                        <div class="col-span-2 bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm">
+                            <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                                <h4 class="font-black text-xs uppercase tracking-widest text-slate-900">Recent Redemptions</h4>
+                                <button class="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">View All</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                            <th class="px-8 py-6">Customer</th>
+                                            <th class="px-8 py-6">Value</th>
+                                            <th class="px-8 py-6">Date</th>
+                                            <th class="px-8 py-6">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-redemptions-table" class="divide-y divide-slate-100">
+                                        <!-- Rows injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-[2.5rem] border border-slate-200 p-8 shadow-sm">
+                            <h4 class="font-black text-xs uppercase tracking-widest text-slate-900 mb-8 text-center">Reward Distribution</h4>
+                            <div class="relative aspect-square">
+                                <canvas id="rewardsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Customers Section -->
+                <section id="admin-customers" class="hidden animate-slide-up space-y-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="relative w-96 group">
+                            <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                            <input type="text" id="customer-search" oninput="filterCustomers()" placeholder="Search customers..." class="w-full pl-14 pr-6 py-4 rounded-[1.5rem] bg-white border border-slate-200 outline-none focus:border-indigo-500 transition-all font-medium text-sm">
+                        </div>
+                        <button onclick="exportCustomersCSV()" class="bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-3 hover:bg-slate-800 transition-all shadow-lg">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 bg-slate-50/50">
+                                    <th class="px-8 py-6">Customer Profile</th>
+                                    <th class="px-8 py-6">Tier Status</th>
+                                    <th class="px-8 py-6">Points</th>
+                                    <th class="px-8 py-6">Visits</th>
+                                    <th class="px-8 py-6 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-list-table" class="divide-y divide-slate-100">
+                                <!-- Rows injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="admin-analytics" class="hidden animate-slide-up space-y-10">
+                    <div class="grid grid-cols-2 gap-10">
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+                            <h4 class="font-black text-xs uppercase tracking-widest text-slate-900 mb-10">Revenue Impact</h4>
+                            <div class="aspect-video"><canvas id="revenueChart"></canvas></div>
+                        </div>
+                        <div class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+                            <h4 class="font-black text-xs uppercase tracking-widest text-slate-900 mb-10">User Growth</h4>
+                            <div class="aspect-video"><canvas id="userChart"></canvas></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Rewards Config Section -->
+                <section id="admin-rewards" class="hidden animate-slide-up max-w-2xl mx-auto">
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm space-y-10">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-indigo-500/10"><i data-lucide="percent" class="w-10 h-10"></i></div>
+                            <h3 class="text-2xl font-black text-slate-900 tracking-tight">Redemption Policy</h3>
+                            <p class="text-sm text-slate-500 font-medium">Define how points translate to currency.</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Point Value (10 Pts = ₹?)</label>
+                                <input type="number" id="config-point-value" class="w-full p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-black text-xl text-indigo-600">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Max Bill Discount (%)</label>
+                                <input type="number" id="config-max-discount" class="w-full p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-black text-xl text-indigo-600">
+                            </div>
+                            <button onclick="saveConfig()" class="w-full premium-gradient text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-indigo-500/20 active:scale-[0.98] transition-all">Update Policy</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Store Settings Section -->
+                <section id="admin-settings" class="hidden animate-slide-up max-w-2xl mx-auto">
+                    <div class="bg-white p-12 rounded-[3rem] border border-slate-200 shadow-sm space-y-10">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-slate-50 text-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-slate-900/5"><i data-lucide="store" class="w-10 h-10"></i></div>
+                            <h3 class="text-2xl font-black text-slate-900 tracking-tight">Store Configuration</h3>
+                            <p class="text-sm text-slate-500 font-medium">Update your business profile and security.</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Restaurant Name</label>
+                                <input type="text" id="settings-name" placeholder="Restaurant Name" class="w-full p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-bold">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2">Admin Secret Code</label>
+                                <input type="password" id="settings-secret" placeholder="Secret Code" class="w-full p-6 rounded-[1.5rem] bg-slate-50 border border-slate-200 outline-none focus:bg-white focus:border-indigo-500 transition-all font-bold tracking-widest">
+                            </div>
+                            <button onclick="saveSettings()" class="w-full bg-slate-900 text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-slate-900/20 active:scale-[0.98] transition-all">Save Changes</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </section>
+
+    <!-- Global Modals (Existing logic but premium styles) -->
+    <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center px-6">
+        <div class="bg-white rounded-[3rem] w-full max-w-sm p-10 text-center space-y-8 animate-slide-up">
+            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-xl shadow-indigo-500/10">
+                <i id="modal-reward-icon" data-lucide="gift" class="w-10 h-10"></i>
+            </div>
+            <div>
+                <h3 id="modal-reward-title" class="text-2xl font-black text-slate-900 tracking-tight">Reward Unlocked!</h3>
+                <p id="modal-reward-name" class="text-indigo-600 font-bold text-lg">50 Points</p>
+                <p id="modal-reward-desc" class="text-xs text-slate-500 font-medium mt-2">Scan this QR at the counter to redeem.</p>
+            </div>
+            <div id="modal-qr-container" class="bg-slate-50 p-6 rounded-3xl border border-slate-100 inline-block mx-auto"></div>
+            <p id="modal-reward-code" class="font-mono text-sm font-black text-slate-400 tracking-widest uppercase">CODE-XXXX</p>
+            <button onclick="closeModal()" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl shadow-xl shadow-slate-900/10 active:scale-95 transition-all">Close</button>
+        </div>
+    </div>
+
+    <script src="snapticle-media-rewards-app.js"></script>
+</body>
+</html>
