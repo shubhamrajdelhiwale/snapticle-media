@@ -171,7 +171,7 @@ if (contactForm) {
     const phone = contactForm.elements["phone"].value.trim();
     const message = contactForm.elements["message"].value.trim();
 
-    const whatsappNumber = "6206060595"; // apna WhatsApp number yaha daalo
+    const whatsappNumber = "916206060595"; // apna WhatsApp number yaha daalo
 
     const text = `New Inquiry From Snapticle Media
 
