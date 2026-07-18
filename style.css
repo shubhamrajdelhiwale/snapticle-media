@@ -5,9 +5,10 @@
 html{
     scroll-behavior: smooth;
 }
-html , body {
-    height:100%;
-    
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 a{
     text-decoration:none;
@@ -1089,22 +1090,9 @@ textarea {
     transform: none !important;
   }
 
-  .hero-cubes,
-  .hero-cubes:hover,
-  .cube,
-  .cube-drift,
-  .cube-front,
-  .cube-top,
-  .cube-side {
-    transform: none !important;
-  }
+  
 
-  .cube-links,
-  .cube-fog,
-  .hero-beam,
-  .hero-signal {
-    display: none !important;
-  }
+  
 
   .hero-ring-three {
     display: none;
